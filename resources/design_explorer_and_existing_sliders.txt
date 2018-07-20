@@ -1,0 +1,12 @@
+Design explorer:
+https://tt-acm.github.io/DesignExplorer/
+
+Design explorer github:
+https://github.com/tt-acm/DesignExplorer
+
+Sample slider interface blocks:
+https://bl.ocks.org/chriswmackey/6b90b66ca1a9462379730cb616930a7a
+https://bl.ocks.org/chriswmackey/17b6a7193bd29804c7e42df125f19a19
+https://bl.ocks.org/chriswmackey/b22359c76e88219883a75b22d8ec9d96
+https://bl.ocks.org/chriswmackey/d213c025759f29221a17281b17b51c66
+https://bl.ocks.org/chriswmackey/3ab39dfc674b221da07fb95560d3aa8f

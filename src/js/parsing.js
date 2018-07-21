@@ -1,4 +1,4 @@
-/* global d3, _data, _allData, _currentValues, _googleObject, _getCsvData, _columnDictionaries, buildAll, _currentRow, _settings, columnNames, $ */
+/* global d3, updateAll, _data, _allData, _currentValues, _googleObject, _getCsvData, _columnDictionaries, buildAll, _currentRow, _settings, columnNames, $ */
 
 
 //Place this file into a <script> tag,
@@ -47,21 +47,8 @@ function getCsvObj(googleObject){
         buildAll();
       });
   });
-
 }
 
-function _getCsvData(sliderStateString){
-    //split on ','
-    console.log('getting csv object');
-    var sliderStateArray = sliderStateString.split(",");
-    _allData.filter(function(arrayObject){
-        if(arrayObject === null){
-            return true;
-        }
-
-        return false;
-    })
-}
 
 function parseCsv(data){
 
@@ -138,9 +125,9 @@ function makeInputSlider(name, unitSuffix, max, isEven, columnName){
    var styleString = isEven ? evenSliderBackground : oddSliderBackground;
    $('#sliderFields').append(
     '<div class="slider" id="'+name+'slider" style="'+styleString+'">'+
-    '<label>'+name+'</label>'+
+    '<label>'+name+' </label>'+
     '<input type="range" name="'+name+'" id="'+name+'" value="0" min="0" max="'+max+'" step = "1">'+
-    '<p id="'+name+'output"> &nbsp'+_columnDictionaries[columnName][0]+'</p>'+
+    '<p id="'+name+'output">'+_columnDictionaries[columnName][0]+'</p>'+
     '</div>');
 }
 

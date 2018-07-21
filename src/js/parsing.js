@@ -427,7 +427,7 @@ function parseCsv(data){
             } else {
                 //this is an output, create a metric div
                 console.log('is output column:'+columnName);
-                makeOutputDiv(name, unitSuffix);
+                //makeOutputDiv(name, unitSuffix);
             }
         } else {
             //must be the 'img' column... or something is wrong.

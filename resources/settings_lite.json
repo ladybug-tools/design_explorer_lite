@@ -41,80 +41,80 @@
 		}
 	},
 	"parameters": {
-		"LabR[%]": {
+		"in:LabR[%]": {
 			"longName": "Lab to NonLab Ratio",
 			"unit": "%"
 		},
-		"FFR [%]": {
+		"in:FFR [%]": {
 			"longName": "Facade-to-Floor",
 			"unit": "%"
 		},
-		"UnderGrnd [%]": {
+		"in:UnderGrnd [%]": {
 			"longName": "Fract Underground",
 			"unit": "%"
 		},
-		"GlzR [%]": {
+		"in:GlzR [%]": {
 			"longName": "Glazing Ratio",
 			"unit": "%"
 		},
-		"Uvalue [IP]": {
+		"in:Uvalue [IP]": {
 			"longName": "Window U-Value"
 		},
-		"HVAC": {
+		"in:HVAC": {
 			"longName": "HVAC Type"
 		},
-		"HeatRecov": {
+		"in:HeatRecov": {
 			"longName": "Heat Recovery"
 		},
-		"LabACH": {
+		"in:LabACH": {
 			"longName": "Lab Ventilation"
 		},
-		"Plant": {
+		"in:Plant": {
 			"longName": "Thermal Source"
 		},
-		"Cooling": {
+		"out:Cooling": {
 			"longName": "Cooling Energy",
 			"unit": "kBtu/sf",
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
-		"Heating": {
+		"out:Heating": {
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
-		"Lighting": {
+		"out:Lighting": {
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
-		"Equipment": {
+		"out:Equipment": {
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
-		"Fans": {
+		"out:Fans": {
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
-		"Pumps": {
+		"out:Pumps": {
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
-		"PeakCool [Btu/h-sf]": {
+		"out:PeakCool [Btu/h-sf]": {
 			"visuals": [
 				"bar_chart_2"
 			]
 		},
-		"PeakHeat [Btu/h-sf]": {
+		"out:PeakHeat [Btu/h-sf]": {
 			"visuals": [
 				"bar_chart_2"
 			]
 		},
-		"EUI [kBtu/sf]": {
+		"out:EUI [kBtu/sf]": {
 			"unit": "kBtu/sf",
 			"visuals": [
 				"eui"

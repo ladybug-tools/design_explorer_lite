@@ -1,4 +1,16 @@
 testParams = ["Cooling[kBTU/sf]","CoolingPk[Tons]"];
+visualTypeSettings ={
+    barChart:{
+        name:"BarChart",
+        stacked: true, 
+        yAxisText: ['Y Axis Title', 'unit'],
+        dataColors: ["rgb(255,255,0)", "rgb(191,191,191)", "rgb(255,0,102)", "rgb(0,176,240)", "rgb(166,216,110)", "rgb(119,185,49)"]
+    },
+    image:{
+        name:"Image",
+        width:12
+    }
+}
 
 function drawSettingViewBody() {
     
@@ -15,27 +27,24 @@ function drawSettingViewBody() {
         }
     };
 
-    var visualTypeSettings ={
-        barChart:{
-            name:"BarChart",
-            stacked: true, 
-            yAxisText: ['Y Axis Title', 'unit'],
-            dataColors: ["rgb(255,255,0)", "rgb(191,191,191)", "rgb(255,0,102)", "rgb(0,176,240)", "rgb(166,216,110)", "rgb(119,185,49)"]
-        },
-        image:{
-            name:"Image",
-            width:12
-        }
-    }
+    
     var visSettingDIV = settingViewBodyDIV.select("#visSettingList");
-    drawVisualsSettingViewBody(visSettingDIV, visualTypeSettings);
+    //drawVisualsSettingViewBody(visSettingDIV, visualTypeSettings);
 
     var paraSettingDIV = settingViewBodyDIV.select("#dimSettingList");
     drawParamsSettingViewBody(paraSettingDIV,params);
 }
-    
+
+_visChartList={}
+function addBarChart(params) {
+    var barChartTempDiv = d3.select("#barChartTemp");
+    var newChartID = genID();
+    var newChartInst = visualTypeSettings.barChart;
+    d3.select("#visSettingList").append("div").html(barChartTempDiv.html())
+    _visChartList[newChartID]=newChartInst;
+}
     //console.log(JSON.stringify(newUserSetting));
-    
+  
 function drawVisualsSettingViewBody(parentDIV,visualTypeSettings) {
     var visTypeNames = d3.keys(visualTypeSettings);
     var visTypes = visualTypeSettings;
@@ -130,6 +139,7 @@ function drawParamsSettingViewBody(parentDIV,params) {
                     .attr("data-toggle", "collapse")
                     .attr("data-parent", "#dimSettingList")
                     .attr("href", function(d){return "#setting"+ string_as_unicode_escape(d);})
+                    .on("click",addAvailableChartAsOptions)
                     .text(function(d){return d;});
 
     var panelBody = selectList.append("div")
@@ -173,7 +183,31 @@ function drawParamsSettingViewBody(parentDIV,params) {
         newUserSetting.parameters[d].unit = value;
     });
 
+    var itemUnit = panelBodyContent.append("li")
+    .attr("id", "availableCharts")
+    .attr("class", "list-group-item form-inline")
+    .text("Show in Chart: ");
 
+    itemUnit.append("input")
+    .attr("class", "form-control input-sm")
+    .attr("placeholder", function(d){return d;})
+    .attr("type", "text")
+    .on("change", function(d){
+        var value = $(this).val();
+        if (newUserSetting.parameters[d] == null) {
+            newUserSetting.parameters[d] = {longName:d,unit:""}
+        }
+        newUserSetting.parameters[d].unit = value;
+    });
+
+
+}
+
+function addAvailableChartAsOptions(d, i){
+    if (d3.event.defaultPrevented) return; // dragged
+    var chartNames = d3.keys(_visChartList);
+    var div = d3.select(this).select("availableCharts").append("ul");
+    div.data(chartNames).enter().append("li").text(function(d){return d;});
 }
 
 function string_as_unicode_escape(input) {
@@ -194,4 +228,8 @@ function saveSettings(){
     console.log("calling saveSettings()");
     
     //buildAll();
+}
+
+function genID() {
+    return (((1+Math.random())*0x10000)|0).toString(16).substring(1); 
 }

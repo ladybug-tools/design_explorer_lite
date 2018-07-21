@@ -1,0 +1,18 @@
+{
+    "csvFiles": {
+        "data.csv": "https://www.googleapis.com/drive/v3/files/0B8secD5h7wUFc0ozc2NWNncxRlE?alt=media&key=AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY"
+    },
+    "imgFiles": {
+        "SHDCOUNT_3.0_GLZPER_0.6_ROOMOR_270.0_RMDEPTH_6.0_RMH_3.6_Perspective.png": "https://docs.google.com/uc?id=0B8secD5h7wUFdzkwVDlXdmUwNWM&export=download",
+        "SHDCOUNT_3.0_GLZPER_0.6_ROOMOR_270.0_RMDEPTH_6.0_RMH_3.0_Perspective.png": "https://docs.google.com/uc?id=0B8secD5h7wUFV3dTdEQ2NjBmb3M&export=download",
+        "SHDCOUNT_0.0_GLZPER_0.4_ROOMOR_135.0_RMDEPTH_6.0_RMH_3.6_Perspective.png": "https://docs.google.com/uc?id=0B8secD5h7wUFeFJadFZWaGkxX2s&export=download"
+    },
+    "jsonFiles": {
+        "SHDCOUNT_3.0_GLZPER_0.6_ROOMOR_270.0_RMDEPTH_6.0_RMH_3.6.json": "https://www.googleapis.com/drive/v3/files/0B8secD5h7wUFRWM1SDZHSl8tYjQ?alt=media&key=AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY",
+        "SHDCOUNT_3.0_GLZPER_0.6_ROOMOR_270.0_RMDEPTH_6.0_RMH_3.0.json": "https://www.googleapis.com/drive/v3/files/0B8secD5h7wUFYUNYamVSUy0xc2M?alt=media&key=AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY",
+        "SHDCOUNT_0.0_GLZPER_0.4_ROOMOR_135.0_RMDEPTH_6.0_RMH_3.6.json": "https://www.googleapis.com/drive/v3/files/0B8secD5h7wUFakN5VGFRZmVDUDA?alt=media&key=AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY"
+    },
+    "settingFiles": {
+        "settings (4).json": "https://www.googleapis.com/drive/v3/files/0B8secD5h7wUFMUJvUFV1VDNvRHM?alt=media&key=AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY"
+    }
+}

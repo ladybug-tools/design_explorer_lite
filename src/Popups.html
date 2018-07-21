@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Explorer lite - Setting</title>
+    <!-- jQuery -->
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- D3 -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+      integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+      crossorigin="anonymous"/>
+    <script src="./js/getGFolderObj.js" type="text/javascript" language="javascript"></script>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="buttons-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li>
+                <!--button to load csv uncommented-->
+                <p class="navbar-text">
+                    <button id="showLoadData" class="file-upload" style="border-radius: 20px;">Get Data</button>
+                </p>
+            </li>
+        </ul>
+        <div id = "navbar-studyInfo">
+            <h4></h4>
+            <h6></h6>
+        </div>
+    </div>
+
+    <div class="container">  
+            
+    <!--load data div-->
+    
+    <div class="col-sm-12 col-centered" id="loadDataContainer" style="width: 700px; height: 500px">
+        <button type="button" class="btn btn-secondary btn-sm pull-right popupWindowClose">
+            <span class="glyphicon glyphicon-remove"></span>
+        </button>
+
+        <h2 class="text-center" style="margin: 100px 0 30px 0;">
+            From the cloud:
+        </h2>
+        <p class="text-center">
+            <input type="text" id="folderLink" class="btn btn-secondary btn-sm toggled" name="imgfolder" placeholder="GoogleDrive, OneDrive, or server link" value="https://drive.google.com/drive/u/0/folders/0B8secD5h7wUFU3ZGTVJaWUpkU2c"
+            />
+            <input type="text" id="folderLinkID" class="btn d-none" name="imgfolder" placeholder="FolderID" />
+            <button type="button" id="loadData" onclick="LoadFromCloud()" class="file-upload" style="border-radius:0 20px 20px 0;">Load Data</button>
+        </p>
+        <h5 class="text-center" style="color: #9d9d9d;">Please put data.csv, images, and 3D-json files into the same folder.(<a href="design_explorer_data/example/online/example.zip"
+                target="_blank">example.zip</a>)</h5>
+        
+        <div id="loadFileLocally">
+            <h4 class="text-center" style="margin: 60px 0 60px 0;">
+                Or
+            </h4>
+            <p class="text-center">
+                <input type="file" id="csv-file" class="btn btn-secondary btn-sm" name="files">
+            </p>
+            <h5 class="text-center" style="color: #9d9d9d;">Please put valid images and 3D-json files URL. (Example:<a href="design_explorer_data/example/LocalCSV_example.csv" target="_blank">data.csv</a>)</h5>
+        </div>
+        
+    </div>
+
+</div>
+</body>
+</html>

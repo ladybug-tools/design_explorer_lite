@@ -52,11 +52,14 @@
 </head>
 
 <body>
-  <!-- Button to Open the gettingDataPopup -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loadingDataView">
-      Get Data
-  </button>
-
+    <!-- Button to Open the gettingDataPopup -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loadingDataView">
+        Get Data
+    </button>
+    <!-- Button to Open the setting -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingView" onclick="drawSettingViewBody()">
+        Settings
+    </button>
 
   <!-- sliders -->
   <div id="input_sliders">
@@ -107,5 +110,76 @@
           </div>
       </div>
   </div>
+
+
+
+    
+    
+    <!-- The Setting View -->
+    <div class="modal fade" id="settingView">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Settings</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body" id="settingViewBody">
+
+                <button id="chartSettingBtn" data-toggle="collapse" data-target="#visualSettingView" >ChartSetting</button>
+                <button id="paramSettingBtn" data-toggle="collapse" data-target="#paramSettingView" >paramSettingView</button>
+                <div id="visualSettingView" class="collapse">
+                    <div class="card card-body">
+                        <div class="panel-group" id="visSettingList">
+                                <button class="btn btn-primary" onclick="addBarChart()">new BarChart</button>
+                                <!--placeholder for visuals setting list-->
+                        </div>
+                        <!-- barChart setting template -->
+                        <div class="d-none" id="barChartTemp">
+                            <ul class="list-group">
+                                <li class="list-group-item form-inline">name
+                                    <input id="name" class="form-control input-sm" type="text" placeholder="newBarChart">
+                                </li>
+                                <li class="list-group-item form-inline">stacked
+                                    <input id="stacked"  class="form-control input-sm" type="text" placeholder="true">
+                                </li>
+                                <li class="list-group-item form-inline">yAxisText
+                                    <input id="yAxisText" class="form-control input-sm" type="text" placeholder="YAxisTitle">
+                                </li>
+                                <li class="list-group-item form-inline">maxVal
+                                <input id="maxVal" class="form-control input-sm" type="text", value="">
+                                </li>
+                                <li class="list-group-item form-inline">dataColors
+                                    <input id="dataColors" class="form-control input-sm" type="text" value="">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="paramSettingView" class="collapse">
+                    <div class="card card-body">
+                        <div class="panel-group" id="dimSettingList">
+                                <!--placeholder for parameters setting list-->
+                        </div>
+                    </div>
+                        
+                </div>
+
+                
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="updateView()">Update</button>
+                <button type="button" class="btn btn-primary" onclick="saveSettings()">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+            
+            </div>
+        </div>
+    </div>
 </body>
 </html>

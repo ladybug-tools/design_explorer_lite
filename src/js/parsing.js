@@ -34,19 +34,18 @@ function getCsvObj(googleObject){
     _allData = d;
     _currentValues = {};
     _data = {}
-    
+    parseCsv(d);
+
     //read settings file
     d3.json(googleObject.settingFiles['settings_lite.json'],
-      function(settingsJson){
+      function(d){
         //add settings file to global _settings
-        _settings = settingsJson;
-        console.log(settingsJson);
+        _settings = d;
+
         console.log('pushed parameters and settings')
         console.log('finished parsing csv')
-        parseCsv(d);
         buildAll();
-    });
-
+      });
   });
 }
 
@@ -78,11 +77,10 @@ function parseCsv(data){
     //console.log(maxSliderRange)
 
     columnNames.forEach((columnName, colIndex) => {
+        var unitSuffix = '';
         var name = '';
         var isEven = colIndex % 2;
         var match = columnRegex.exec(columnName);
-        var longName = _settings.parameters[columnName].longName || columnName;
-        var unitSuffix = _settings.parameters[columnName].unit || "";
         if(match) {
             console.log('got match on columnName: '+columnName)
             console.log('match object:')
@@ -94,9 +92,9 @@ function parseCsv(data){
             if(match[1] === 'in'){
                 //this is an input column, create a slider and event handler.
                 console.log('found in for column:'+columnName);
-                makeInputSlider(name, unitSuffix, longName, maxSliderRange[columnName], isEven, columnName);
+                makeInputSlider(name, unitSuffix, maxSliderRange[columnName], isEven, columnName);
                 console.log('made input slider')
-                makeInputSliderEventHandler(name, columnName, unitSuffix);
+                makeInputSliderEventHandler(name, columnName);
                 console.log('made slider event handler');
             } else {
                 //this is an output, create a metric div
@@ -114,7 +112,7 @@ function parseCsv(data){
 
 
 
-function makeInputSlider(name, unitSuffix, longName, max, isEven, columnName){
+function makeInputSlider(name, unitSuffix, max, isEven, columnName){
     console.log('making input slider for name: '+name+' with unit suffix: '+unitSuffix);
     /*
     <div class="slider" id="progRatio">
@@ -125,16 +123,15 @@ function makeInputSlider(name, unitSuffix, longName, max, isEven, columnName){
     */
    //<fieldset id="sliderFields" class="inputgroup">
    var styleString = isEven ? evenSliderBackground : oddSliderBackground;
-   
    $('#sliderFields').append(
     '<div class="slider" id="'+name+'slider" style="'+styleString+'">'+
-    '<label>'+longName+' </label>'+
+    '<label>'+name+' </label>'+
     '<input type="range" name="'+name+'" id="'+name+'" value="0" min="0" max="'+max+'" step = "1">'+
-    '<p id="'+name+'output">'+_columnDictionaries[columnName][0]+unitSuffix+'</p>'+
+    '<p id="'+name+'output">'+_columnDictionaries[columnName][0]+'</p>'+
     '</div>');
 }
 
-function makeInputSliderEventHandler(name, columnName, unitSuffix){
+function makeInputSliderEventHandler(name, columnName){
     /*
     $("#flrA").on("input", function(event) {
         FlrA = $(this).val();
@@ -153,7 +150,7 @@ function makeInputSliderEventHandler(name, columnName, unitSuffix){
     //    console.log('from dictionary, that should be: '+_columnDictionaries[columnName][currentValue])
     //    console.log('heres that columns dictionary')
     //    console.log(_columnDictionaries[columnName]);
-       $(outPutName).text(_columnDictionaries[columnName][currentValue]+unitSuffix)
+       $(outPutName).text(_columnDictionaries[columnName][currentValue])
        _currentValues[columnName] = _columnDictionaries[columnName][currentValue];
        getSliderStateAndPushCsvRow();
    })

@@ -158,6 +158,7 @@ function makeInputSliderEventHandler(name, columnName){
        var currentValue = $(this).val();
        output[name] = currentValue;
        $(outPutName).text(columnDictionaries[columnName][currentValue])
+       updateAll();
    })
 }
 

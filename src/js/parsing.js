@@ -1,3 +1,6 @@
+/* global d3, _allData, _googleObject, _getCsvData, _columnDictionaries, buildAll, updateAll, _settings, columnNames, $ */
+
+
 //Place this file into a <script> tag,
 //Call method parseCsv(googleObject) after getting the google drive link from user
 
@@ -26,6 +29,7 @@ var _parameters =[];
 function getCsvObj(googleObject){
   //read csv file from google drive
   _googleObject = googleObject
+  _columnDictionaries = {};
   d3.csv(googleObject.csvFiles['data.csv'], function(d){
     _allData = d;
     parseCsv(d);
@@ -47,6 +51,10 @@ function getCsvObj(googleObject){
 
 }
 
+function convertSliderStateStringToCsvRow(sliderStateString){
+    //split on ','
+    return "";
+}
 
 function parseCsv(data){
 
@@ -68,7 +76,7 @@ function parseCsv(data){
         addRowToSets(row, columnNames);
     });
     console.log('added row to sets')
-    calculateMaxOfEachSet();
+    var maxSliderRange = calculateMaxOfEachSet();
     console.log('calculated max of sets')
     //console.log(maxSliderRange)
 
@@ -78,7 +86,7 @@ function parseCsv(data){
         var isEven = colIndex % 2;
         var match = columnRegex.exec(columnName);
         if(match) {
-
+            console.log('got match on columnName: '+columnName)
             name = match[2];
             _parameters.push(name);
             columnToNameMap[columnName] = name;
@@ -88,14 +96,15 @@ function parseCsv(data){
                 console.log('found in for column:'+columnName);
                 makeInputSlider(name, unitSuffix, maxSliderRange[columnName], isEven);
                 console.log('made input slider')
-                //makeInputSliderEventHandler(name, columnName);
+                makeInputSliderEventHandler(name, columnName);
                 console.log('made slider event handler');
             } else {
                 //this is an output, create a metric div
                 console.log('is output column:'+columnName);
-                //makeOutputDiv(name, unitSuffix);
+                makeOutputDiv(name, unitSuffix);
             }
         } else {
+            console.log('did not get match on columnName: '+columnName+' is it the img column?')
             //must be the 'img' column... or something is wrong.
             //consider throwing error at some other time?
         }
@@ -136,38 +145,38 @@ function makeInputSliderEventHandler(name, columnName){
    var idName = "#"+name;
    console.log(idName);
    var outPutName = idName + "output"
-   $(idName).on("input", function(event){
+   $(idName).on("input", function(){
        var currentValue = $(this).val();
-       output[name] = currentValue;
-       $(outPutName).text(columnDictionaries[columnName][currentValue])
+       $(outPutName).text(_columnDictionaries[columnName][currentValue])
        updateAll();
    })
 }
 
 function makeOutputDiv(name, unitSuffix){
     $("#metrics").append('<div class="slider2" id="'+name+'div"><div id="'+name+'"></div><p style="margin-top:3px;">'+unitSuffix+'<br>'+name+'</p></div>');
-};
+}
 
 function calculateMaxOfEachSet(){
-    columnDictionaries = {}
-    maxSliderRange= {}
+    var maxSliderRange = {}
     columnNames.forEach(columnName => {
         columnSets[columnName].forEach(columnSet =>{
-            columnDictionaries[columnName] = {};
+            _columnDictionaries[columnName] = {};
             var key = 0;
             var columnEntriesArray = Array.from(columnSet).sort();
             columnEntriesArray.forEach(arrayEntrySorted => {
-                columnDictionaries[columnName][key] = arrayEntrySorted;
+                _columnDictionaries[columnName][key] = arrayEntrySorted;
                 key++;
             });
 
             maxSliderRange[columnName] = columnEntriesArray.length;
         });
     });
+
+    return maxSliderRange;
 }
 
 function addRowToSets(row){
     columnNames.forEach(columnName => {
         columnSets[columnName].add(row[columnName]); //sets only add new uniques.
     });
-};
+}

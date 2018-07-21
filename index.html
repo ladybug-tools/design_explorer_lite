@@ -21,6 +21,7 @@
 
 
     <script src="./src/js/parsing.js"></script>
+    <script src="./src/js/settings.js"></script>
     <script src="./src/js/getGFolderObj.js"></script>
     <script src="./src/js/build_update.js"></script>
     <script src="./src/js/bar_chart.js"></script>
@@ -65,13 +66,13 @@
   <div class="modal fade" id="loadingDataView">
       <div class="modal-dialog">
           <div class="modal-content">
-          
+
               <!-- Modal Header -->
               <div class="modal-header">
                   <h4 class="modal-title">From the cloud</h4>
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
               </div>
-              
+
               <!-- Modal body -->
               <div class="modal-body" id="settingViewBody">
                   <p class="text-center">
@@ -79,15 +80,15 @@
                       />
                       <input type="text" id="folderLinkID" class="btn d-none" name="imgfolder" placeholder="FolderID" />
                   </p>
-      
+
               </div>
-              
+
               <!-- Modal footer -->
               <div class="modal-footer">
                   <button type="button" class="btn btn-primary" onclick="LoadFromCloud()" data-dismiss="modal">Load Data</button>
                   <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
               </div>
-          
+
           </div>
       </div>
   </div>

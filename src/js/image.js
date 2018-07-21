@@ -41,7 +41,7 @@ buildImage = function(imageName, propertiesDict) {
   return imgObj
 }
 
-updateImg = function(imgObj, updateImageName) {
+updateImage = function(imgObj, updateImageName) {
   // grab important paramters from the object
   svg = imgObj['svg']
 

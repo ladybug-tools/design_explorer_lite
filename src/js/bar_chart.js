@@ -184,19 +184,19 @@ buildChart = function(dataList, propertiesDict) {
 // Function to update the chart.
 updateChart = function(chartObj, updatedData=[]){
   // grab important paramters from the object
-  svg = chartObj['svg']
+  svgU = chartObj['svg']
   stacked = chartObj['stacked']
   yScale = chartObj['yScale']
 
   // delete old bars from the chart.
-  svg.selectAll('.dataBar').remove();
+  svgU.selectAll('.dataBar').remove();
 
   // add new bars to the chart.
   stackIncrement = 0
   if (stacked == true){
     stackIncrement = 0
     for (i = 0; i < updatedData.length; i++) {
-      svg.append("rect")
+      svgU.append("rect")
         .attr("x", chartObj['margin'].left + chartObj['barSpacer'])
         .attr("y", chartObj['svgheight']- chartObj['margin'].bottom - yScale(chartObj['maxVal']-updatedData[i]) - yScale(chartObj['maxVal'] - stackIncrement))
         .attr("width", chartObj['barWidth'])
@@ -206,10 +206,11 @@ updateChart = function(chartObj, updatedData=[]){
         .style("stroke", "#000")
         .style("stroke-width", "0.05em");
       stackIncrement += updatedData[i]
+    console.log(stackIncrement)
     }
   } else{
     for (i = 0; i < updatedData.length; i++) {
-        svg.append("rect")
+        svgU.append("rect")
           .attr("x", chartObj['margin'].left + chartObj['barSpacer'] + chartObj['barWidth'] * i)
           .attr("y", chartObj['svgheight'] - chartObj['margin'].bottom - yScale(chartObj['maxVal']-updatedData[i]))
           .attr("width", chartObj['barWidth'])
@@ -220,4 +221,5 @@ updateChart = function(chartObj, updatedData=[]){
           .style("stroke-width", "0.05em");
 			}
   }
+  console.log(updatedData)
 }

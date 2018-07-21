@@ -1,7 +1,7 @@
 
 buildAll = function() {
   // dictionaries for different visualizations
-  barCharts = {}
+  _barCharts = {}
   metrics = {}
   image = {}
 
@@ -21,21 +21,21 @@ buildAll = function() {
           vizName = vizes[j]
           vizType = _settings['visuals'][vizName]["type"]
           if (vizType == 'barChart') {
-            if (vizName in barCharts) {
-              barCharts[vizName]['indices'].push(paramName)
+            if (vizName in _barCharts) {
+              _barCharts[vizName]['indices'].push(paramName)
               if ("longName" in _settings['parameters'][paramName]){
-                barCharts[vizName]['props']['dataNames'].push(_settings['parameters'][paramName]["longName"])
+                _barCharts[vizName]['props']['dataNames'].push(_settings['parameters'][paramName]["longName"])
               } else{
-                barCharts[vizName]['props']['dataNames'].push(paramName)
+                _barCharts[vizName]['props']['dataNames'].push(paramName)
               }
             } else {
-              barCharts[vizName] = {'props': _settings['visuals'][vizName]}
-              barCharts[vizName]['indices'] = [paramName]
-              barCharts[vizName]['props']['dataNames'] = []
+              _barCharts[vizName] = {'props': _settings['visuals'][vizName]}
+              _barCharts[vizName]['indices'] = [paramName]
+              _barCharts[vizName]['props']['dataNames'] = []
               if ("longName" in _settings['parameters'][paramName]){
-                barCharts[vizName]['props']['dataNames'].push(_settings['parameters'][paramName]["longName"])
+                _barCharts[vizName]['props']['dataNames'].push(_settings['parameters'][paramName]["longName"])
               } else{
-                barCharts[vizName]['props']['dataNames'].push(paramName)
+                _barCharts[vizName]['props']['dataNames'].push(paramName)
               }
             }
           }
@@ -69,10 +69,10 @@ buildAll = function() {
     }
 
     // assemble all of the bar charts in the scene
-    barChartNames = d3.keys(barCharts)
+    barChartNames = d3.keys(_barCharts)
     for (i = 0; i < barChartNames.length; i++) {
       barChartName =  barChartNames[i]
-      barCharts[barChartName]['object'] = buildChart(getData(barCharts[barChartName]['indices']), barCharts[barChartName]['props'])
+      _barCharts[barChartName]['object'] = buildChart(getData(_barCharts[barChartName]['indices']), _barCharts[barChartName]['props'])
     }
 
     // assemble all of the metrics in the scene
@@ -117,17 +117,31 @@ updateAll = function() {
   updateImage(image['object'], _currentRow['img'])
 
   // update all of the bar charts
-  barChartNames = d3.keys(barCharts)
-  for (i = 0; i < barChartNames.length; i++) {
-    barChartName =  barChartNames[i]
-    updateChart(barCharts[barChartName]['object'], getData(barCharts[barChartName]['indices']))
+  barChartNames = d3.keys(_barCharts)
+  if (barChartNames.length > 0){
+    barChartData = getData(_barCharts[barChartNames[0]]['indices'])
+    barchartObj1 = _barCharts[barChartNames[0]]['object']
+    updateChart(barchartObj1, barChartData)
   }
+  if (barChartNames.length > 1){
+    barChartData = getData(_barCharts[barChartNames[1]]['indices'])
+    barchartObj2 = _barCharts[barChartNames[1]]['object']
+    updateChart(barchartObj2, barChartData)
+  }
+  //updateChart(barchartObj, barChartData)
+  //for (i = 0; i < barChartNames.length; i++) {
+  //  console.log(barChartName)
+  //  barChartName =  barChartNames[i]
+  //  barchartObj = _barCharts[barChartName]['object']
+  //  barChartData = getData(_barCharts[barChartName]['indices'])
+  //  updateChart(barchartObj, barChartData)
+  //}
 
   // update the metricNames
   metricNames = d3.keys(metrics)
   for (i = 0; i < metricNames.length; i++) {
     metricName =  metricNames[i]
-    updateMetric(metrics[metricName]['object'], getData(metrics[metricName]['indices'])[0])
+    //updateMetric(metrics[metricName]['object'], getData(metrics[metricName]['indices'])[0])
 }
 }
 

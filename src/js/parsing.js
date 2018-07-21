@@ -150,7 +150,7 @@ function makeInputSliderEventHandler(name, columnName){
     //    console.log('from dictionary, that should be: '+_columnDictionaries[columnName][currentValue])
     //    console.log('heres that columns dictionary')
     //    console.log(_columnDictionaries[columnName]);
-       $(outPutName).text('&nbsp'+_columnDictionaries[columnName][currentValue])
+       $(outPutName).text(_columnDictionaries[columnName][currentValue])
        _currentValues[columnName] = _columnDictionaries[columnName][currentValue];
        getSliderStateAndPushCsvRow();
    })

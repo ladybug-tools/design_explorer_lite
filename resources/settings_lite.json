@@ -14,14 +14,11 @@
 			"yAxisText": [
 				"EUI",
 				"kBtu/sf"
-			]
+			],
+			"maxVal": 200
 		},
 		"bar_chart_2": {
 			"type": "barChart",
-			"dataNames": [
-				"Cooling",
-				"Heating"
-			],
 			"dataColors": [
 				"rgb(24,77,138)",
 				"rgb(168,5,0)"
@@ -30,7 +27,8 @@
 			"yAxisText": [
 				"Peak Load",
 				"(BTU/hr-sf)"
-			]
+			],
+			"maxVal": 20
 		},
 		"eui": {
 			"type": "metric"
@@ -73,48 +71,58 @@
 			"longName": "Thermal Source"
 		},
 		"out:Cooling": {
-			"longName": "Cooling Energy",
+			"longName": "cooling",
 			"unit": "kBtu/sf",
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
 		"out:Heating": {
+		"longName": "heating",
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
 		"out:Lighting": {
+			"longName": "lighting",
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
 		"out:Equipment": {
+			"longName": "equipment",
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
 		"out:Fans": {
+			"longName": "fans",
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
 		"out:Pumps": {
+			"longName": "pumps",
 			"visuals": [
 				"bar_chart_1"
 			]
 		},
 		"out:PeakCool [Btu/h-sf]": {
+			"longName": "peak cooling",
+			"unit": "Btu-h/sf",
 			"visuals": [
 				"bar_chart_2"
 			]
 		},
 		"out:PeakHeat [Btu/h-sf]": {
+			"longName": "peak heating",
+			"unit": "Btu-h/sf",
 			"visuals": [
 				"bar_chart_2"
 			]
 		},
 		"out:EUI [kBtu/sf]": {
+			"longName": "EUI",
 			"unit": "kBtu/sf",
 			"visuals": [
 				"eui"

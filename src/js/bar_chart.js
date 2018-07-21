@@ -8,7 +8,7 @@ buildChart = function(dataList, propertiesDict) {
   yAxisText=['Value','units']
   maxVal=null
   svgwidth=3
-  svgheight=6
+  svgheight=4
   margin={top:20,right:40,bottom:30,left:70}
 
   // check the properties dictionary to see if any are overridden

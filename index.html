@@ -19,12 +19,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
+
+    <script src="./src/js/parsing.js"></script>
+    <script src="./src/js/getGFolderObj.js"></script>
     <title>Design Explorer Lite</title>
 </head>
 
 <body>
   <!-- sliders -->
   <div id="input_sliders">
+    <form autocomplete="off">
+      <fieldset id="sliderFields">
+      </fieldset>
+    </form>
   </div>
 
   <!-- visual content, images, graphs -->
@@ -34,5 +41,8 @@
   <!-- visual content, images, graphs -->
   <div id="metrics">
   </div>
+  <script>
+    //call gobject, and pass it to parser
+  </script>
 </body>
 </html>

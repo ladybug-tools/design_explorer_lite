@@ -354,13 +354,12 @@ var googleObject ={
     },
     "jsonFiles": {},
     "settingFiles": {
-        "settings_lite.json": "https://www.googleapis.com/drive/v3/files/10NAtvhE7-MbXSJJprJ_KFY09ZFIgoYsO?alt=media&key=AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY
+        "settings_lite.json": "https://www.googleapis.com/drive/v3/files/10NAtvhE7-MbXSJJprJ_KFY09ZFIgoYsO?alt=media&key=AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY"
     }
 }
 
 function getCsvObj(googleObject){
   //read csv file from google drive
-  console.log(googleObject.csvFiles['data.csv']);
   d3.csv(googleObject.csvFiles['data.csv'], function(d){
     _allData = d;
     parseCsv(d);

@@ -66,7 +66,6 @@ buildChart = function(dataList, propertiesDict) {
   if (dataNames.length == 0){
     for (i = 0; i < dataList.length; i++) {
       dataNames.push('Var ' + i.toString())
-      console.log(i)
     }
   }
 

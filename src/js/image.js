@@ -22,7 +22,7 @@ buildImage = function(imageName, propertiesDict) {
   height = (windowTwelf * height) - 5
 
   // get the google drive URL from the image name
-  URL = googleObject["imgFiles"][imageName]
+  URL = _googleObject["imgFiles"][imageName]
 
   // add the image to the svg
   var svg = d3.select("#content").append("svg")
@@ -49,7 +49,7 @@ updateImg = function(imgObj, updateImageName) {
   svg.selectAll('.imgdisplay').remove();
 
   // get the google drive URL from the image name
-  URL = googleObject["imgFiles"][updateImageName]
+  URL = _googleObject["imgFiles"][updateImageName]
 
   svg.append("image")
         .attr('xlink:href', URL)

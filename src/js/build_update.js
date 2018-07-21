@@ -1,5 +1,7 @@
 
 buildAll = function() {
+  // put all data into a central dictionary to look up ouptus by inputs.
+
   // dictionaries for different visualizations
   barCharts = {}
   metrics = {}
@@ -77,8 +79,6 @@ buildAll = function() {
   metricNames = d3.keys(metrics)
   for (i = 0; i < metricNames.length; i++) {
     metricName =  metricNames[i]
-    console.log(metricName)
     metrics[metricName]['object'] = buildMetric(metrics[metricName]['data'], metrics[metricName]['props'])
   }
-
 }

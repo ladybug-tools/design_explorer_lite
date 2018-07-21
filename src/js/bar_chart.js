@@ -9,7 +9,7 @@ buildChart = function(dataList, propertiesDict) {
   maxVal=null
   svgwidth=3
   svgheight=6
-  margin={top:20,right:40,bottom:30,left:70})
+  margin={top:20,right:40,bottom:30,left:70}
 
   // check the properties dictionary to see if any are overridden
   if ("dataNames" in propertiesDict){

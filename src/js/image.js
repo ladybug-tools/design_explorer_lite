@@ -3,7 +3,7 @@ buildImage = function(imageName, propertiesDict) {
   // set default values
   width=3
   height=6
-  margin={top:0,right:0,bottom:0,left:0})
+  margin={top:0,right:0,bottom:0,left:0}
 
   // check the properties dictionary to see if any are overridden
   if ("width" in propertiesDict){
@@ -41,7 +41,7 @@ buildImage = function(imageName, propertiesDict) {
   return imgObj
 }
 
-updateImg(imgObj, updateImageName){
+updateImg = function(imgObj, updateImageName) {
   // grab important paramters from the object
   svg = imgObj['svg']
 

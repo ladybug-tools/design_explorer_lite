@@ -7,8 +7,8 @@ buildChart = function(dataList, propertiesDict) {
   stacked=true,
   yAxisText=['Value','units']
   maxVal=null
-  svgwidth=260
-  svgheight=400
+  svgwidth=3
+  svgheight=6
   margin={top:20,right:40,bottom:30,left:70})
 
   // check the properties dictionary to see if any are overridden
@@ -36,6 +36,11 @@ buildChart = function(dataList, propertiesDict) {
   if ("margin" in propertiesDict){
     margin = propertiesDict["margin"]
   }
+
+  // convert svg width in 12/ths to pixels.
+  windowTwelf = window.innerWidth/12
+  svgwidth = windowTwelf * svgwidth
+  svgheight = windowTwelf * svgheight
 
   // calculate chart properties
   width = svgwidth - margin.left - margin.right

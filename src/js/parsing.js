@@ -111,7 +111,7 @@ function parseCsv(data){
             } else {
                 //this is an output, create a metric div
                 console.log('is output column:'+columnName);
-                makeOutputDiv(name, unitSuffix);
+                //makeOutputDiv(name, unitSuffix);
             }
         } else {
             console.log('did not get match on columnName: '+columnName+' is it the img column?')
@@ -163,13 +163,20 @@ function makeInputSliderEventHandler(name, columnName){
        console.log('heres that columns dictionary')
        console.log(_columnDictionaries[columnName]);
        $(outPutName).text(_columnDictionaries[columnName][currentValue])
-       // TODO: get finalized thing updateAll();
+       //getSliderStateAndPushCsvRow();
    })
 }
 
-function makeOutputDiv(name, unitSuffix){
-    $("#metrics").append('<div class="slider2" id="'+name+'div"><div id="'+name+'"></div><p style="margin-top:3px;">'+unitSuffix+'<br>'+name+'</p></div>');
+function getSliderStateAndPushCsvRow(){
+    console.log('getting state and pushing function')
+    columnNames.forEach(columnName => {
+
+    })
 }
+
+// function makeOutputDiv(name, unitSuffix){
+//     $("#metrics").append('<div class="slider2" id="'+name+'div"><div id="'+name+'"></div><p style="margin-top:3px;">'+unitSuffix+'<br>'+name+'</p></div>');
+// }
 
 function calculateMaxOfEachSet(){
     var maxSliderRange = {}

@@ -25,7 +25,7 @@ function drawSettingViewBody() {
     var settingViewBodyDIV = d3.select("#settingViewBody");
     var params = d3.keys(_settings.parameters);//TODO: _parameters will be the final
     // check _settings if exist
-    if(_settings === null) _settings = {};
+    if(typeof _settings === undefined) _settings = {};
     if(!_settings.hasOwnProperty("parameters")){
         _settings["parameters"] = {}
         params.forEach(paramName=>{
@@ -36,6 +36,7 @@ function drawSettingViewBody() {
             }
         })
     }
+    //_visChartList
 
     
     // console.log(_settings);
@@ -68,7 +69,7 @@ function drawSettingViewBody() {
     drawParamsSettingViewBody(params);
 }
 
-_visChartList={DataMatric:{}}
+_visChartList={}
 
 function addBarChart(params) {
     console.log(params);
@@ -241,19 +242,41 @@ function drawParamsSettingViewBody(params) {
 
 function addAvailableChartAsOptions(d, i){
     if (d3.event.defaultPrevented) return; // dragged
-    var chartNames = d3.keys(_visChartList);
+    var chartNames = d3.keys(_settings.visuals);
 
-    //chartNames = ["DataMatric","chart_dder"];
+    //chartNames = _settings.parameters[d].visuals;
 
-    var div = d3.select("#setting"+string_as_unicode_escape(d)+" #availableCharts").append("ul");
-    console.log(chartNames);
+    var div = d3.select("#setting"+string_as_unicode_escape(d)+" #availableCharts");
+
+    div.selectAll("*").remove();
+    var divUl = div.append("ul");
+    //console.log(chartNames);
 
     chartNames.forEach(chartName=>{
-        div.append("li")
+        divUl.append("li")
         .append("div")
         .attr("class", "checkbox")
         .append("label").text(chartName)
-        .append("input").attr("type", "checkbox").attr("value", "checkbox").attr("id", chartName)
+        .append("input").attr("type", "checkbox").attr("value", "checkbox").attr("id", chartName).property('checked', function (name) {
+            checkedItems = _settings.parameters[name].visuals;
+            var ifChecked = false;
+            if (typeof checkedItems === 'undefined') {
+                return false
+            }else{
+                ifChecked = checkedItems.indexOf(chartName)>-1;
+                return ifChecked;
+            }
+
+            // console.log(_settings.parameters[name].visuals);
+            // console.log(ifChecked);
+            
+            // if(ifChecked === -1){
+            //     return false;
+            // }else{
+            //     return true;
+            // }
+            
+        })
         .on('click',function(e){
         var ifChecked = d3.select(this).property("checked");
         var chartName = d3.select(this).property("id");

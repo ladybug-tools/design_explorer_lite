@@ -28,14 +28,12 @@
     <script src="./src/js/image.js"></script>
     <script src="./src/js/metric.js"></script>
 
-    <style>    
-    .metricdiv {background-color:#f2f2f2; width:210px;float:left;padding:10px;text-align:center;float:'left'}
-    .metricval {font-size:30px}
+    <style>
     #inputSliders {font-family:sans-serif;outline:none;padding-top:15px;margin: 0 auto;}
     #summary {font-family:sans-serif;font-weight:bold;text-align:center;outline:none;padding-top:15px;margin: 0 auto;}
     #content {margin: 0 auto;}
     .inputgroup {border:none;}
-    .slider { width:fit-content; float:left;padding:10px;height:fit-content}
+    .slider {float:left;padding:10px;height:fit-content}
     #input_sliders label { float:left;font-weight:bold;padding-bottom:10px;}
     input[type=range] { float:left;clear:left;margin-right:10px;width:105px;}
     input[type=range]::-ms-track { background: transparent;border-color: transparent;color: transparent;-webkit-appearance: none}
@@ -113,19 +111,19 @@
 
 
 
-    
-    
+
+
     <!-- The Setting View -->
     <div class="modal fade" id="settingView">
         <div class="modal-dialog">
             <div class="modal-content">
-            
+
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Settings</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            
+
             <!-- Modal body -->
             <div class="modal-body" id="settingViewBody">
 
@@ -165,19 +163,19 @@
                                 <!--placeholder for parameters setting list-->
                         </div>
                     </div>
-                        
+
                 </div>
 
-                
+
             </div>
-            
+
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateView()">Update</button>
                 <button type="button" class="btn btn-primary" onclick="saveSettings()">Save</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
-            
+
             </div>
         </div>
     </div>

@@ -6,7 +6,8 @@ precisionRound = function(number, precision) {
 
 buildMetric = function(metricValue, propertiesDict) {
   // set default values
-  width = '4'
+  width = 4
+  height = 1
   decimals = 1
   units = ""
   longName = ""
@@ -15,6 +16,9 @@ buildMetric = function(metricValue, propertiesDict) {
   // check the properties dictionary to see if any are overridden
   if ("width" in propertiesDict){
     width = propertiesDict["width"].toString()
+  }
+  if ("height" in propertiesDict){
+    height = propertiesDict["height"].toString()
   }
   if ("decimals" in propertiesDict){
     decimals = propertiesDict["decimals"]
@@ -29,26 +33,64 @@ buildMetric = function(metricValue, propertiesDict) {
   // convert svg width in 12/ths to pixels.
   windowTwelf = parseInt(window.innerWidth/12)
   width = (windowTwelf * width) - 5
+  height = (windowTwelf * height) - 5
   styleString ='width:'+ width +'px;'
 
+  // add the image to the svg
+  var svgT = d3.select("#metrics").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr('id', id)
 
-  $('#metrics').append(
-   '<div class= "metricdiv" style= "'+ styleString +'">'+
-   '<div class= "metricval" id="'+ id +'">' + precisionRound(metricValue, decimals).toString() +
-   '</div>' +
-   '<p>' + units + '<br>' + longName + '</p>'+
-   '</div>');
+  svgT.append("rect")
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("fill", '#f2f2f2');
 
-  return id
+  svgT.append("text")
+    .attr("class", "resultText")
+    .attr("text-anchor", "middle")
+    .attr("fill", "#000")
+    .attr("x", width/2)
+    .attr("y", 35)
+    .style('font-size', '30px')
+    .style('font-family', 'sans-serif')
+    .text(precisionRound(metricValue, decimals).toString());
+
+    svgT.append("text")
+      .attr("text-anchor", "middle")
+      .attr("fill", "#000")
+      .attr("x", width/2)
+      .attr("y", 55)
+      .style('font-size', '15px')
+      .style('font-family', 'sans-serif')
+      .text(units);
+
+    svgT.append("text")
+      .attr("text-anchor", "middle")
+      .attr("fill", "#000")
+      .attr("x", width/2)
+      .attr("y", 75)
+      .style('font-size', '15px')
+      .style('font-family', 'sans-serif')
+      .text(longName);
+
+  return {'svg': svgT, 'decimals': decimals}
 }
 
-updateMetric = function(id, num) {
-  uId = "#" + id.toString()
-  d3.select(uId).remove()
-  d3.select(uId).append("text")
-        .attr("text-anchor", "start")
+
+updateMetric = function(obj, num) {
+  svgT = obj['svg']
+  decimals = obj['decimals']
+  svgT.selectAll('.resultText').remove();
+
+  svgT.append("text")
+        .attr("class", "resultText")
+        .attr("text-anchor", "middle")
         .attr("fill", "#000")
+        .attr("x", width/2)
+        .attr("y", 35)
     		.style('font-size', '30px')
     		.style('font-family', 'sans-serif')
-   			.text(num.toString());
+   			.text(precisionRound(num, decimals).toString());
 }

@@ -28,6 +28,7 @@ buildImage = function(imageName, propertiesDict) {
   var svg = d3.select("#content").append("svg")
     .attr("width", width)
     .attr("height", height)
+
     svg.append("image")
         .attr('xlink:href', URL)
         .attr('class', 'pico')

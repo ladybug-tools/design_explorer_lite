@@ -138,11 +138,10 @@ updateAll = function() {
   //}
 
   // update the metricNames
-  metricNames = d3.keys(metrics)
   for (i = 0; i < metricNames.length; i++) {
     metricName =  metricNames[i]
-    //updateMetric(metrics[metricName]['object'], getData(metrics[metricName]['indices'])[0])
-}
+    updateMetric(metrics[metricName]['object'], getData(metrics[metricName]['indices'])[0])
+  }
 }
 
 

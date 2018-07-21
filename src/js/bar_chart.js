@@ -206,7 +206,6 @@ updateChart = function(chartObj, updatedData=[]){
         .style("stroke", "#000")
         .style("stroke-width", "0.05em");
       stackIncrement += updatedData[i]
-    console.log(stackIncrement)
     }
   } else{
     for (i = 0; i < updatedData.length; i++) {
@@ -221,5 +220,4 @@ updateChart = function(chartObj, updatedData=[]){
           .style("stroke-width", "0.05em");
 			}
   }
-  console.log(updatedData)
 }

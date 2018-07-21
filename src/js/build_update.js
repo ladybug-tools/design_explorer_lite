@@ -82,6 +82,24 @@ buildAll = function() {
 }
 
 
+updateAll = function() {
+  // update the image
+  updateImage(image['object'], _currentRow['img'])
+
+  // update all of the bar charts
+  barChartNames = d3.keys(barCharts)
+  for (i = 0; i < barChartNames.length; i++) {
+    barChartName =  barChartNames[i]
+    updateChart(barCharts[barChartName]['object'], getData(barCharts[barChartName]['indices']))
+
+  // update the metricNames
+  metricNames = d3.keys(metrics)
+  for (i = 0; i < metricNames.length; i++) {
+    metricName =  metricNames[i]
+    updateMetric(metrics[metricName]['object'], getData(metrics[metricName]['indices'])[0])
+}
+
+
 getData = function(indices){
   finalList = []
   for  (k = 0; k < indices.length; k++) {

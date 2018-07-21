@@ -17,14 +17,12 @@ buildImage = function(imageName, propertiesDict) {
   }
 
   // convert svg width in 12/ths to pixels.
-  windowTwelf = parseInt(window.innerWidth/12) - 5
-  width = windowTwelf * width
-  height = windowTwelf * height
+  windowTwelf = parseInt(window.innerWidth/12)
+  width = (windowTwelf * width) - 5
+  height = (windowTwelf * height) - 5
 
   // get the google drive URL from the image name
   URL = googleObject["imgFiles"][imageName]
-  console.log(imageName)
-  console.log(URL)
 
   // add the image to the svg
   var svg = d3.select("#content").append("svg")

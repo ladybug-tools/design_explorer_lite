@@ -21,14 +21,31 @@ buildAll = function() {
         if (vizType == 'barChart') {
           if (vizName in barCharts) {
             barCharts[vizName]['data'].push(parseFloat(defaultData[paramName]))
+            if ("longName" in _settings['parameters'][paramName]){
+              barCharts[vizName]['props']['dataNames'].push(_settings['parameters'][paramName]["longName"])
+            } else{
+              barCharts[vizName]['props']['dataNames'].push(paramName)
+            }
           } else {
             barCharts[vizName] = {'props': _settings['visuals'][vizName]}
             barCharts[vizName]['data'] = [parseFloat(defaultData[paramName])]
+            barCharts[vizName]['props']['dataNames'] = []
+            if ("longName" in _settings['parameters'][paramName]){
+              barCharts[vizName]['props']['dataNames'].push(_settings['parameters'][paramName]["longName"])
+            } else{
+              barCharts[vizName]['props']['dataNames'].push(paramName)
+            }
           }
-        if (vizType == 'metric') {
-          metrics[vizName] = {'props': _settings['visuals'][vizName]}
-          metrics[vizName]['data'] = [parseFloat(defaultData[paramName])]
         }
+      if (vizType == 'metric') {
+        metrics[vizName] = {'props': _settings['visuals'][vizName]}
+        if ("longName" in _settings['parameters'][paramName]){
+          metrics[vizName]['props']['longName'] = _settings['parameters'][paramName]["longName"]
+        }
+        if ("unit" in _settings['parameters'][paramName]){
+          metrics[vizName]['props']['units'] = _settings['parameters'][paramName]["unit"]
+        }
+        metrics[vizName]['data'] = [parseFloat(defaultData[paramName])]
       }
     }
   }
@@ -37,12 +54,15 @@ buildAll = function() {
   // assemble the image in the scene
   if ("img" in defaultData) {
     imgProps = {}
+
+    // get any over-ridden properties
     for (i = 0; i < visuals.length; i++) {
       vizName = visuals[i]
       if (_settings['visuals'][vizName]["type"] == 'image'){
         imgProps = _settings['visuals'][vizName]
       }
     }
+
     image['object'] = buildImage(defaultData['img'], imgProps)
   }
 
@@ -52,4 +72,13 @@ buildAll = function() {
     barChartName =  barChartNames[i]
     barCharts[barChartName]['object'] = buildChart(barCharts[barChartName]['data'], barCharts[barChartName]['props'])
   }
+
+  // assemble all of the metrics in the scene
+  metricNames = d3.keys(metrics)
+  for (i = 0; i < metricNames.length; i++) {
+    metricName =  metricNames[i]
+    console.log(metricName)
+    metrics[metricName]['object'] = buildMetric(metrics[metricName]['data'], metrics[metricName]['props'])
+  }
+
 }

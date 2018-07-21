@@ -33,6 +33,12 @@
 		"eui": {
 			"type": "metric"
 		},
+		"peakcool": {
+			"type": "metric"
+		},
+		"peakheat": {
+			"type": "metric"
+		},
 		"options_image": {
 			"type": "image",
 			"width": 6
@@ -107,25 +113,27 @@
 				"bar_chart_1"
 			]
 		},
+		"out:EUI [kBtu/sf]": {
+			"longName": "energy use intensity",
+			"unit": "kBtu/sf",
+			"visuals": [
+				"eui"
+			]
+		},
 		"out:PeakCool [Btu/h-sf]": {
 			"longName": "peak cooling",
 			"unit": "Btu-h/sf",
 			"visuals": [
-				"bar_chart_2"
+				"bar_chart_2",
+				"peakcool"
 			]
 		},
 		"out:PeakHeat [Btu/h-sf]": {
 			"longName": "peak heating",
 			"unit": "Btu-h/sf",
 			"visuals": [
-				"bar_chart_2"
-			]
-		},
-		"out:EUI [kBtu/sf]": {
-			"longName": "EUI",
-			"unit": "kBtu/sf",
-			"visuals": [
-				"eui"
+				"bar_chart_2",
+				"peakheat"
 			]
 		}
 	}

@@ -22,6 +22,11 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
+    
+    <!-- Button to Open the gettingDataPopup -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#gettingDataView" onclick="drawSettingViewBody()">
+        Get Data
+  </button>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="buttons-navbar-collapse-1">
         <ul class="nav navbar-nav">
@@ -29,6 +34,7 @@
                 <!--button to load csv uncommented-->
                 <p class="navbar-text">
                     <button id="showLoadData" class="file-upload" style="border-radius: 20px;">Get Data</button>
+                    
                 </p>
             </li>
         </ul>
@@ -75,6 +81,7 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingView" onclick="drawSettingViewBody()">
         Settings
     </button>
+    
     
     <!-- The Setting View -->
     <div class="modal fade" id="settingView">

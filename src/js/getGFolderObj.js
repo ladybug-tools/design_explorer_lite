@@ -9,7 +9,6 @@ settingFiles:{}
 function LoadFromCloud(dataMethod) {
     var serverFolderLink;
     
-    document.getElementById('csv-file').value = "";
 
     //this is for the short link with ID
     if (dataMethod === "URL") {
@@ -215,7 +214,9 @@ function prepareGFolder(folderLink) {
                 alert("Could not find the data.csv file in this folder, please double check!\n\rThis might because Google Drive is processing the newly uploaded files, please wait a couple minutes!");
             } else {
                 //readyToLoad(csvFile);
+                
                 console.log(_googleReturnObj);
+                getCsvObj(_googleReturnObj);
                 
             }
    

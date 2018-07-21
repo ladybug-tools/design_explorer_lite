@@ -1,5 +1,13 @@
 
 buildAll = function() {
+  // set all slider divs to have the same width.
+  windowTwelf = parseInt(window.innerWidth/12)
+  width = (windowTwelf * 2) - 5
+  height = (windowTwelf * 1) - 5
+  d3.selectAll('.slider')
+    .style("width", width.toString()+'px')
+    .style("height", '100px')
+
   // dictionaries for different visualizations
   _barCharts = {}
   metrics = {}

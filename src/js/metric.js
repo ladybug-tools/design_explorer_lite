@@ -34,7 +34,6 @@ buildMetric = function(metricValue, propertiesDict) {
   windowTwelf = parseInt(window.innerWidth/12)
   width = (windowTwelf * width) - 5
   height = (windowTwelf * height) - 5
-  styleString ='width:'+ width +'px;'
 
   // add the image to the svg
   var svgT = d3.select("#metrics").append("svg")

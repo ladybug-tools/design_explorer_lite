@@ -51,9 +51,17 @@ function getCsvObj(googleObject){
 
 }
 
-function convertSliderStateStringToCsvRow(sliderStateString){
+function _getCsvData(sliderStateString){
     //split on ','
-    return "";
+    console.log('getting csv object');
+    var sliderStateArray = sliderStateString.split(",");
+    _allData.filter(function(arrayObject){
+        if(arrayObject === null){
+            return true;
+        }
+
+        return false;
+    })
 }
 
 function parseCsv(data){
@@ -96,7 +104,7 @@ function parseCsv(data){
             if(match[1] === 'in'){
                 //this is an input column, create a slider and event handler.
                 console.log('found in for column:'+columnName);
-                makeInputSlider(name, unitSuffix, maxSliderRange[columnName], isEven);
+                makeInputSlider(name, unitSuffix, maxSliderRange[columnName], isEven, columnName);
                 console.log('made input slider')
                 makeInputSliderEventHandler(name, columnName);
                 console.log('made slider event handler');
@@ -116,7 +124,7 @@ function parseCsv(data){
 
 
 
-function makeInputSlider(name, unitSuffix, max, isEven){
+function makeInputSlider(name, unitSuffix, max, isEven, columnName){
     console.log('making input slider for name: '+name+' with unit suffix: '+unitSuffix);
     /*
     <div class="slider" id="progRatio">
@@ -128,10 +136,10 @@ function makeInputSlider(name, unitSuffix, max, isEven){
    //<fieldset id="sliderFields" class="inputgroup">
    var styleString = isEven ? evenSliderBackground : oddSliderBackground;
    $('#sliderFields').append(
-    '<div class="slider" id="'+name+'" style="'+styleString+'">'+
+    '<div class="slider" id="'+name+'slider" style="'+styleString+'">'+
     '<label>'+name+'</label>'+
     '<input type="range" name="'+name+'" id="'+name+'" value="0" min="0" max="'+max+'" step = "1">'+
-    '<p id="'+name+'output"></p>'+
+    '<br><p id="'+name+'output">'+_columnDictionaries[columnName][0]+'</p>'+
     '</div>');
 }
 
@@ -148,9 +156,14 @@ function makeInputSliderEventHandler(name, columnName){
    console.log(idName);
    var outPutName = idName + "output"
    $(idName).on("input", function(){
+       console.log('firing event for slider: '+name);
        var currentValue = $(this).val();
+       console.log('current value is '+currentValue)
+       console.log('from dictionary, that should be: '+_columnDictionaries[columnName][currentValue])
+       console.log('heres that columns dictionary')
+       console.log(_columnDictionaries[columnName]);
        $(outPutName).text(_columnDictionaries[columnName][currentValue])
-       updateAll();
+       // TODO: get finalized thing updateAll();
    })
 }
 
@@ -160,25 +173,32 @@ function makeOutputDiv(name, unitSuffix){
 
 function calculateMaxOfEachSet(){
     var maxSliderRange = {}
+    console.log('calculating max of each set and making dictionaries');
     columnNames.forEach(columnName => {
-        columnSets[columnName].forEach(columnSet =>{
-            _columnDictionaries[columnName] = {};
-            var key = 0;
-            var columnEntriesArray = Array.from(columnSet).sort();
-            columnEntriesArray.forEach(arrayEntrySorted => {
-                _columnDictionaries[columnName][key] = arrayEntrySorted;
-                key++;
-            });
-
-            maxSliderRange[columnName] = columnEntriesArray.length;
+        console.log('column name: '+columnName)
+        var columnEntriesArray = Array.from(columnSets[columnName]).sort();
+        console.log('from set: ')
+        console.log(columnSets[columnName])
+        console.log('sorted columnEntriesArray');
+        console.log(columnEntriesArray);
+        _columnDictionaries[columnName] = {};
+        var key = 0;
+        columnEntriesArray.forEach(arrayEntrySorted =>{
+            // console.log('Adding key: '+key+' for columnName: '+columnName+' with value of:'+arrayEntrySorted)
+            _columnDictionaries[columnName][key] = arrayEntrySorted;
+            key++;
         });
+        maxSliderRange[columnName] = columnEntriesArray.length -1;
     });
 
     return maxSliderRange;
 }
 
 function addRowToSets(row){
+    // console.log('add this row:')
+    // console.log(row);
     columnNames.forEach(columnName => {
+        // console.log('adding '+row[columnName]+' to '+columnName+' set')
         columnSets[columnName].add(row[columnName]); //sets only add new uniques.
     });
 }

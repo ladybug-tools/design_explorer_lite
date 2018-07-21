@@ -1,8 +1,41 @@
 
 
-buildChart = function(dataList=[], dataNames=[], dataColors =[], stacked=true,
-  yAxisText=['Value','units'], maxVal=null, svgwidth=260,
-  svgheight=400, margin={top:20,right:40,bottom:30,left:70}) {
+buildChart = function(dataList, propertiesDict) {
+  // set default values
+  dataNames=[]
+  dataColors =[]
+  stacked=true,
+  yAxisText=['Value','units']
+  maxVal=null
+  svgwidth=260
+  svgheight=400
+  margin={top:20,right:40,bottom:30,left:70})
+
+  // check the properties dictionary to see if any are overridden
+  if ("dataNames" in propertiesDict){
+    dataNames = propertiesDict["dataNames"]
+  }
+  if ("dataColors" in propertiesDict){
+    dataColors = propertiesDict["dataColors"]
+  }
+  if ("stacked" in propertiesDict){
+    stacked = propertiesDict["stacked"]
+  }
+  if ("yAxisText" in propertiesDict){
+    yAxisText = propertiesDict["yAxisText"]
+  }
+  if ("maxVal" in propertiesDict){
+    maxVal = propertiesDict["maxVal"]
+  }
+  if ("svgwidth" in propertiesDict){
+    svgwidth = propertiesDict["svgwidth"]
+  }
+  if ("svgheight" in propertiesDict){
+    svgheight = propertiesDict["svgheight"]
+  }
+  if ("margin" in propertiesDict){
+    margin = propertiesDict["margin"]
+  }
 
   // calculate chart properties
   width = svgwidth - margin.left - margin.right
@@ -60,30 +93,27 @@ buildChart = function(dataList=[], dataNames=[], dataColors =[], stacked=true,
     .call(d3.axisBottom(x));
 
   // add the y-axis labels
-  if (yAxisText.length > 0) {
-    g.append("g")
-        .attr("class", "axis axis--y")
-        .call(d3.axisLeft(yScale).ticks(10, "s"))
-      .append("text")
-        .attr("x", 10)
-        .attr("y", yScale(yScale.ticks(10).pop()))
-        .attr("dy", "0.35em")
-        .attr("text-anchor", "start")
-        .attr("fill", "#000")
-        .style('font-size', '14px')
-        .text(yAxisText[0]);
-  }
+  g.append("g")
+      .attr("class", "axis axis--y")
+      .call(d3.axisLeft(yScale).ticks(10, "s"))
 
-  if (yAxisText.length > 1) {
-    g.append("text")
-        .attr("x", 10)
-        .attr("y", yScale(yScale.ticks(10).pop()) + 14)
-        .attr("dy", "0.35em")
-        .attr("text-anchor", "start")
-        .attr("fill", "#000")
-        .style('font-size', '11px')
-        .style('font-family', 'sans-serif')
-        .text(yAxisText[1]);
+  if (yAxisText.length > 0) {
+    for (i = 0; i < yAxisText.length; i++) {
+      if (i == 0){
+        textHeight = '14px'
+      } else{
+        textHeight = '11px'
+      }
+      g.append("text")
+          .attr("x", 10)
+          .attr("y", yScale(yScale.ticks(10).pop()) + (i * 14))
+          .attr("dy", "0.35em")
+          .attr("text-anchor", "start")
+          .attr("fill", "#000")
+          .style('font-size', textHeight)
+          .style('font-family', 'sans-serif')
+          .text(yAxisText[i]);
+      }
   }
 
   // add the legend
@@ -112,54 +142,78 @@ buildChart = function(dataList=[], dataNames=[], dataColors =[], stacked=true,
   // add the data
   if (stacked == true){
     stackIncrement = 0
-    svg.attr("class", "stacked")
-    for (i = 0; i < data.length; i++) {
+    for (i = 0; i < dataList.length; i++) {
       svg.append("rect")
         .attr("x", margin.left + barSpacer)
-        .attr("y", svgheight- margin.bottom - yScale(maxVal-data[i]) - yScale(maxVal - stackIncrement))
+        .attr("y", svgheight- margin.bottom - yScale(maxVal-dataList[i]) - yScale(maxVal - stackIncrement))
         .attr("width", barWidth)
-        .attr("height", yScale(maxVal - data[i]))
+        .attr("height", yScale(maxVal - dataList[i]))
         .attr('fill', dataColors[i])
         .attr("class", "dataBar")
         .style("stroke", "#000")
         .style("stroke-width", "0.05em");
-      stackIncrement += data[i]
+      stackIncrement += dataColors[i]
     }
   } else{
-    svg.attr("class", "normal")
-    for (i = 0; i < data.length; i++) {
+    for (i = 0; i < dataList.length; i++) {
         svg.append("rect")
           .attr("x", margin.left + barSpacer + barWidth * i)
-          .attr("y", svgheight- margin.bottom - yScale(maxVal-data[i]))
+          .attr("y", svgheight- margin.bottom - yScale(maxVal-dataList[i]))
           .attr("width", barWidth)
-          .attr("height", yScale(maxVal - data[i]))
+          .attr("height", yScale(maxVal - dataList[i]))
           .attr('fill', dataColors[i])
-        	.attr("class", "peakBar")
+        	.attr("class", "dataBar")
           .style("stroke", "#000")
           .style("stroke-width", "0.05em");
 			}
   }
 
-  return svg
+  chartObj = {'svg': svg, 'stacked': stacked, 'margin': margin,
+    'svgheight': svgheight, 'barSpacer': barSpacer, 'yScale': yScale,
+    'maxVal': maxVal, 'barWidth': barWidth, 'dataColors': dataColors}
+
+  return chartObj
 }
 
 
-// Function to update the chart.
-updateChart = function(svgForUpdate, updatedData=[]){
 
-  // Update the chart.
-  svgForUpdate.selectAll('.dataBar').remove();
+// Function to update the chart.
+updateChart = function(chartObj, updatedData=[]){
+  // grab important paramters from the object
+  svg = chartObj['svg']
+  stacked = chartObj['stacked']
+  yScale = chartObj['yScale']
+
+  // delete old bars from the chart.
+  svg.selectAll('.dataBar').remove();
+
+  // add new bars to the chart.
   stackIncrement = 0
-  for (i = 0; i < data.length; i++) {
-    svg2.append("rect")
-      .attr("x", margin.left + barSpacer)
-      .attr("y", svgheight- margin.bottom - yScale(maxVal-data[i]) - yScale(maxVal - stackIncrement))
-      .attr("width", 80)
-      .attr("height", yScale(maxVal - data[i]))
-      .attr('fill', colors[i])
-      .attr("class", "dataBar")
-      .style("stroke", "#000")
-      .style("stroke-width", "0.05em");
-    stackIncrement += data[i]
+  if (stacked == true){
+    stackIncrement = 0
+    for (i = 0; i < updatedData.length; i++) {
+      svg.append("rect")
+        .attr("x", chartObj['margin'].left + chartObj['barSpacer'])
+        .attr("y", chartObj['svgheight']- chartObj['margin'].bottom - yScale(chartObj['maxVal']-updatedData[i]) - yScale(chartObj['maxVal'] - stackIncrement))
+        .attr("width", chartObj['barWidth'])
+        .attr("height", yScale(chartObj['maxVal'] - updatedData[i]))
+        .attr('fill', chartObj['dataColors'][i])
+        .attr("class", "dataBar")
+        .style("stroke", "#000")
+        .style("stroke-width", "0.05em");
+      stackIncrement += updatedData[i]
+    }
+  } else{
+    for (i = 0; i < updatedData.length; i++) {
+        svg.append("rect")
+          .attr("x", chartObj['margin'].left + chartObj['barSpacer'] + chartObj['barWidth'] * i)
+          .attr("y", chartObj['svgheight'] - chartObj['margin'].bottom - yScale(chartObj['maxVal']-updatedData[i]))
+          .attr("width", chartObj['barWidth'])
+          .attr("height", yScale(chartObj['maxVal'] - updatedData[i]))
+          .attr('fill', chartObj['dataColors'][i])
+        	.attr("class", "dataBar")
+          .style("stroke", "#000")
+          .style("stroke-width", "0.05em");
+			}
   }
 }

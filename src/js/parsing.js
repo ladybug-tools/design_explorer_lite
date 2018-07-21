@@ -1,4 +1,4 @@
-/* global d3, updateAll, _data, _allData, _currentValues, _googleObject, _getCsvData, _columnDictionaries, buildAll, _currentRow, _settings, columnNames, $ */
+/* global d3, updateAll, _data, _allData, _currentValues, _googleObject, _columnDictionaries, buildAll, _currentRow, _settings, columnNames, $ */
 
 
 //Place this file into a <script> tag,
@@ -7,21 +7,15 @@
 //ASSUME: Format of data.csv comes in as https://github.com/d3/d3-dsv#dsv_parse dsv parse format, with data.columns
 
 //ASSUME: Jquery is already loaded, and $ is in global scope.
-//Assume: Methods updateImg();  updateEnergy(); exist on global scope
+//Assume: Method updateAll(); exist on global scope
 
 //This method will be called with the Google object - GET the data.csv, and the settings file
-
-//this method will perform a loop, and PER input column:
-//1.) Create Input{{NAME}} where name is name of column
-//1.5) Create jquery on input changes for the above inputs
-//2.) Create {{NAME}}Dict
 
 
 var columnRegex = new RegExp(/((?:in)|(?:out)): ?(?:(\w*) ?(?:\[(.*)\])?)/i);
 var oddSliderBackground = "background-color:#f2f2f2";
 var evenSliderBackground = "background-color:#e6e6e6";
 var columnToNameMap = {};
-var rowValueSets = {};
 
 var columnSets = {};
 var _parameters =[];
@@ -34,14 +28,13 @@ function getCsvObj(googleObject){
     _allData = d;
     _currentValues = {};
     _data = {}
-    parseCsv(d);
 
     //read settings file
     d3.json(googleObject.settingFiles['settings_lite.json'],
-      function(d){
+      function(settingsJson){
         //add settings file to global _settings
-        _settings = d;
-
+        _settings = settingsJson;
+        parseCsv(d);
         console.log('pushed parameters and settings')
         console.log('finished parsing csv')
         buildAll();
@@ -77,7 +70,6 @@ function parseCsv(data){
     //console.log(maxSliderRange)
 
     columnNames.forEach((columnName, colIndex) => {
-        var unitSuffix = '';
         var name = '';
         var isEven = colIndex % 2;
         var match = columnRegex.exec(columnName);
@@ -88,13 +80,14 @@ function parseCsv(data){
             name = match[2];
             _parameters.push(name);
             columnToNameMap[columnName] = name;
-
+            var longName = _settings.parameters[columnName].longName || columnName;
+            var unitSuffix = _settings.parameters[columnName].unit || "";
             if(match[1] === 'in'){
                 //this is an input column, create a slider and event handler.
                 console.log('found in for column:'+columnName);
-                makeInputSlider(name, unitSuffix, maxSliderRange[columnName], isEven, columnName);
+                makeInputSlider(name, unitSuffix, longName, maxSliderRange[columnName], isEven, columnName);
                 console.log('made input slider')
-                makeInputSliderEventHandler(name, columnName);
+                makeInputSliderEventHandler(name, columnName, unitSuffix);
                 console.log('made slider event handler');
             } else {
                 //this is an output, create a metric div
@@ -112,7 +105,7 @@ function parseCsv(data){
 
 
 
-function makeInputSlider(name, unitSuffix, max, isEven, columnName){
+function makeInputSlider(name, unitSuffix, longName, max, isEven, columnName){
     console.log('making input slider for name: '+name+' with unit suffix: '+unitSuffix);
     /*
     <div class="slider" id="progRatio">
@@ -125,13 +118,13 @@ function makeInputSlider(name, unitSuffix, max, isEven, columnName){
    var styleString = isEven ? evenSliderBackground : oddSliderBackground;
    $('#sliderFields').append(
     '<div class="slider" id="'+name+'slider" style="'+styleString+'">'+
-    '<label>'+name+' </label>'+
+    '<label>'+longName+'</label>'+
     '<input type="range" name="'+name+'" id="'+name+'" value="0" min="0" max="'+max+'" step = "1">'+
-    '<p id="'+name+'output">'+_columnDictionaries[columnName][0]+'</p>'+
+    '<p id="'+name+'output">'+_columnDictionaries[columnName][0]+unitSuffix+'</p>'+
     '</div>');
 }
 
-function makeInputSliderEventHandler(name, columnName){
+function makeInputSliderEventHandler(name, columnName, unitSuffix){
     /*
     $("#flrA").on("input", function(event) {
         FlrA = $(this).val();
@@ -150,7 +143,7 @@ function makeInputSliderEventHandler(name, columnName){
     //    console.log('from dictionary, that should be: '+_columnDictionaries[columnName][currentValue])
     //    console.log('heres that columns dictionary')
     //    console.log(_columnDictionaries[columnName]);
-       $(outPutName).text(_columnDictionaries[columnName][currentValue])
+       $(outPutName).text(_columnDictionaries[columnName][currentValue]+unitSuffix)
        _currentValues[columnName] = _columnDictionaries[columnName][currentValue];
        getSliderStateAndPushCsvRow();
    })

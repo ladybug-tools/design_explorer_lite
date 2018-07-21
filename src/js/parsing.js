@@ -49,6 +49,7 @@ function parseCsv(data){
     // add csv data to gobal _csvdata
     _currentValues = {};
     //get description from settings file
+    _settingsFromFile = true
 
 
     console.log('Starting parse csv')
@@ -80,8 +81,13 @@ function parseCsv(data){
             name = match[2];
             _parameters.push(name);
             columnToNameMap[columnName] = name;
-            var longName = _settings.parameters[columnName].longName || columnName;
-            var unitSuffix = _settings.parameters[columnName].unit || "";
+            if (_settings != null){
+              var longName = _settings.parameters[columnName].longName || columnName;
+              var unitSuffix = _settings.parameters[columnName].unit || "";
+            } else {
+              var longName = columnName
+              var unitSuffix = ''
+            }
             if(match[1] === 'in'){
                 //this is an input column, create a slider and event handler.
                 console.log('found in for column:'+columnName);
@@ -100,7 +106,15 @@ function parseCsv(data){
             //consider throwing error at some other time?
         }
     });
-
+    if (_settings == null){
+      _settings = {'parameters': {}}
+      columnNames.forEach((columnName, colIndex) => {
+        _settings['parameters'][columnName] = {}
+      });
+      _settingsFromFile = false
+    }else {
+      _settingsFromFile = true
+    }
 }
 
 

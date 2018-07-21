@@ -13,7 +13,7 @@ buildAll = function() {
   metrics = {}
   image = {}
 
-  if (_settings != null){
+  if (_settingsFromFile == true){
     // There is already a settings_lite.json file that will help us build the page.
 
     // get the first row of data, which will be used to generate the default starting grahpics
@@ -113,7 +113,7 @@ buildAll = function() {
     metricNames = d3.keys(metrics)
     for (i = 0; i < metricNames.length; i++) {
       metricName =  metricNames[i]
-      metrics[metricName]['object'] = buildMetric(getData(metrics[metricName]['indices'])[0], {})
+      metrics[metricName]['object'] = buildMetric(getData(metrics[metricName]['indices'])[0], {'longName': metrics[metricName]['indices']})
     }
   }
 

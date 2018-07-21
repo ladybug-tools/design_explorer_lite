@@ -42,8 +42,6 @@ function getCsvObj(googleObject){
 
 
         console.log('pushed parameters and settings')
-        console.log(_settings)
-        console.log(_parameters)
         console.log('finished parsing csv')
         buildAll();
       });

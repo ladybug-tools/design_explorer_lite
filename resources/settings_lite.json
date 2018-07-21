@@ -1,0 +1,124 @@
+{
+	"visuals": {
+		"bar_chart_1": {
+			"type": "barChart",
+			"dataColors": [
+				"rgb(255,255,0)",
+				"rgb(191,191,191)",
+				"rgb(255,0,102)",
+				"rgb(0,176,240)",
+				"rgb(166,216,110)",
+				"rgb(119,185,49)"
+			],
+			"stacked": true,
+			"yAxisText": [
+				"EUI",
+				"kBtu/sf"
+			]
+		},
+		"bar_chart_2": {
+			"type": "barChart",
+			"dataNames": [
+				"Cooling",
+				"Heating"
+			],
+			"dataColors": [
+				"rgb(24,77,138)",
+				"rgb(168,5,0)"
+			],
+			"stacked": false,
+			"yAxisText": [
+				"Peak Load",
+				"(BTU/hr-sf)"
+			]
+		},
+		"eui": {
+			"type": "metric"
+		},
+		"options_image": {
+			"type": "image",
+			"width": 6
+		}
+	},
+	"parameters": {
+		"LabR[%]": {
+			"longName": "Lab to NonLab Ratio",
+			"unit": "%"
+		},
+		"FFR [%]": {
+			"longName": "Facade-to-Floor",
+			"unit": "%"
+		},
+		"UnderGrnd [%]": {
+			"longName": "Fract Underground",
+			"unit": "%"
+		},
+		"GlzR [%]": {
+			"longName": "Glazing Ratio",
+			"unit": "%"
+		},
+		"Uvalue [IP]": {
+			"longName": "Window U-Value"
+		},
+		"HVAC": {
+			"longName": "HVAC Type"
+		},
+		"HeatRecov": {
+			"longName": "Heat Recovery"
+		},
+		"LabACH": {
+			"longName": "Lab Ventilation"
+		},
+		"Plant": {
+			"longName": "Thermal Source"
+		},
+		"Cooling": {
+			"longName": "Cooling Energy",
+			"unit": "kBtu/sf",
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"Heating": {
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"Lighting": {
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"Equipment": {
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"Fans": {
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"Pumps": {
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"PeakCool [Btu/h-sf]": {
+			"visuals": [
+				"bar_chart_2"
+			]
+		},
+		"PeakHeat [Btu/h-sf]": {
+			"visuals": [
+				"bar_chart_2"
+			]
+		},
+		"EUI [kBtu/sf]": {
+			"unit": "kBtu/sf",
+			"visuals": [
+				"eui"
+			]
+		}
+	}
+}

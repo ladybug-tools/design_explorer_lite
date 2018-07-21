@@ -1,11 +1,5 @@
-// default properties of the chart
-var maxVal = 200
-var data = [5, 20, 50, 20, 25, 10]
-var colors = ["rgb(255,255,0)", "rgb(191,191,191)", "rgb(255,0,102)", "rgb(0,176,240)","rgb(166,216,110)","rgb(119,185,49)"]
-var names = ["Lighting", "Equipment", "Heating", "Cooling","Fans","Pumps"]
 
 
-// layout the chart
 buildChart = function(dataList=[], dataNames=[], dataColors =[], stacked=true,
   yAxisText=['Value','units'], maxVal=null, svgwidth=260,
   svgheight=400, margin={top:20,right:40,bottom:30,left:70}) {
@@ -153,7 +147,7 @@ buildChart = function(dataList=[], dataNames=[], dataColors =[], stacked=true,
 // Function to update the chart.
 updateChart = function(svgForUpdate, updatedData=[]){
 
-  // Update the energy chart.
+  // Update the chart.
   svgForUpdate.selectAll('.dataBar').remove();
   stackIncrement = 0
   for (i = 0; i < data.length; i++) {

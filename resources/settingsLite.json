@@ -1,0 +1,20 @@
+'settingsLite' = {
+	[
+	'bar_chart_1': {'type': 'barChart', 'dataNames' =[], 'dataColors' =[], 'stacked' = true, 'yAxisText'=['Value','units'], 'maxVal'=null, 'svgwidth'=1 },
+	'bar_chart_2': {'type': 'barChart', 'dataNames' =[], 'dataColors' =[], 'stacked' = false, 'yAxisText'=['Value','units'], 'maxVal'=null, 'svgwidth'=1 },
+	'eui': {'type': 'metric'}
+	'options_image': {type: 'image', 'width': 6}
+	],
+	
+	[
+	'cooling' : ['bar_chart_1'],
+	'heating' : ['bar_chart_1'],
+	'lighting' : ['bar_chart_1'],
+	'equipment' : ['bar_chart_1'],
+	'fans' : ['bar_chart_1'],
+	'pumps' : ['bar_chart_1'],
+	'peakCool' : ['bar_chart_2'],
+	'peakHeat' : ['bar_chart_2'],
+	'EUI': ['eui']
+	]
+}

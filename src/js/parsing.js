@@ -1,4 +1,4 @@
-/* global d3, _allData, _googleObject, _getCsvData, _columnDictionaries, buildAll, updateAll, _settings, columnNames, $ */
+/* global d3, _data, _allData, _currentValues, _googleObject, _getCsvData, _columnDictionaries, buildAll, _currentRow, _settings, columnNames, $ */
 
 
 //Place this file into a <script> tag,
@@ -32,6 +32,8 @@ function getCsvObj(googleObject){
   _columnDictionaries = {};
   d3.csv(googleObject.csvFiles['data.csv'], function(d){
     _allData = d;
+    _currentValues = {};
+    _data = {}
     parseCsv(d);
 
     //read settings file
@@ -39,7 +41,6 @@ function getCsvObj(googleObject){
       function(d){
         //add settings file to global _settings
         _settings = d;
-
 
         console.log('pushed parameters and settings')
         console.log('finished parsing csv')
@@ -66,7 +67,7 @@ function parseCsv(data){
 
     columnNames = d3.keys(data[0]);
     // add csv data to gobal _csvdata
-
+    _currentValues = {};
     //get description from settings file
 
 
@@ -81,8 +82,10 @@ function parseCsv(data){
     data.forEach(row => {
         addRowToSets(row, columnNames);
     });
+
     console.log('added row to sets')
     var maxSliderRange = calculateMaxOfEachSet();
+    setDefaultCurrentValues();
     console.log('calculated max of sets')
     //console.log(maxSliderRange)
 
@@ -137,7 +140,7 @@ function makeInputSlider(name, unitSuffix, max, isEven, columnName){
     '<div class="slider" id="'+name+'slider" style="'+styleString+'">'+
     '<label>'+name+'</label>'+
     '<input type="range" name="'+name+'" id="'+name+'" value="0" min="0" max="'+max+'" step = "1">'+
-    '<br><p id="'+name+'output">'+_columnDictionaries[columnName][0]+'</p>'+
+    '<p id="'+name+'output"> &nbsp'+_columnDictionaries[columnName][0]+'</p>'+
     '</div>');
 }
 
@@ -156,27 +159,43 @@ function makeInputSliderEventHandler(name, columnName){
    $(idName).on("input", function(){
        console.log('firing event for slider: '+name);
        var currentValue = $(this).val();
-       console.log('current value is '+currentValue)
-       console.log('from dictionary, that should be: '+_columnDictionaries[columnName][currentValue])
-       console.log('heres that columns dictionary')
-       console.log(_columnDictionaries[columnName]);
-       $(outPutName).text(_columnDictionaries[columnName][currentValue])
-       //getSliderStateAndPushCsvRow();
+    //    console.log('current value is '+currentValue)
+    //    console.log('from dictionary, that should be: '+_columnDictionaries[columnName][currentValue])
+    //    console.log('heres that columns dictionary')
+    //    console.log(_columnDictionaries[columnName]);
+       $(outPutName).text('&nbsp'+_columnDictionaries[columnName][currentValue])
+       _currentValues[columnName] = _columnDictionaries[columnName][currentValue];
+       getSliderStateAndPushCsvRow();
    })
 }
 
 function getSliderStateAndPushCsvRow(){
     console.log('getting state and pushing function')
-    columnNames.forEach(columnName => {
-
+    var currentValuesString = "";
+    d3.keys(_currentValues).forEach(inputValue => {
+        currentValuesString += _currentValues[inputValue]
     })
+    console.log('getting csv row for: '+currentValuesString);
+    _currentRow = _data[currentValuesString];
+    console.log('set currentRow');
+    console.log(_currentRow);
+    updateAll();
 }
 
 // function makeOutputDiv(name, unitSuffix){
 //     $("#metrics").append('<div class="slider2" id="'+name+'div"><div id="'+name+'"></div><p style="margin-top:3px;">'+unitSuffix+'<br>'+name+'</p></div>');
 // }
 
+function setDefaultCurrentValues(){
+    columnNames.forEach(columnName => {
+        if(columnName.startsWith("in:")){
+            _currentValues[columnName] = _columnDictionaries[columnName][0];
+        }
+    });
+}
+
 function calculateMaxOfEachSet(){
+
     var maxSliderRange = {}
     console.log('calculating max of each set and making dictionaries');
     columnNames.forEach(columnName => {
@@ -202,8 +221,14 @@ function calculateMaxOfEachSet(){
 function addRowToSets(row){
     // console.log('add this row:')
     // console.log(row);
+    var inputStringCombination = "";
     columnNames.forEach(columnName => {
         // console.log('adding '+row[columnName]+' to '+columnName+' set')
         columnSets[columnName].add(row[columnName]); //sets only add new uniques.
+        if(columnName.startsWith("in:")){
+            //concatenate and add to jsonObject
+            inputStringCombination += row[columnName];
+        }
     });
+    _data[inputStringCombination] = row;
 }

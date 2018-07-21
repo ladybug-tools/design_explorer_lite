@@ -16,8 +16,8 @@
 //1.5) Create jquery on input changes for the above inputs
 //2.) Create {{NAME}}Dict
 
-var columnRegexPattern = "((?:in)|(?:out)): ?(?:(\w*) ?(?:\[(.*)\])?)";
-var columnRegex = new RegExp(columnRegexPattern);
+
+var columnRegex = new RegExp(/((?:in)|(?:out)): ?(?:(\w*) ?(?:\[(.*)\])?)/i);
 var oddSliderBackground = "background-color:#f2f2f2";
 var evenSliderBackground = "background-color:#e6e6e6";
 var columnToNameMap = {};
@@ -87,6 +87,8 @@ function parseCsv(data){
         var match = columnRegex.exec(columnName);
         if(match) {
             console.log('got match on columnName: '+columnName)
+            console.log('match object:')
+            console.log(match)
             name = match[2];
             _parameters.push(name);
             columnToNameMap[columnName] = name;

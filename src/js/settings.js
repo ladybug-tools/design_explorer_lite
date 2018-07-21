@@ -1,5 +1,4 @@
-testParams = ["out:Lighting [#]","CoolingPk[Tons]"];
-_settings = {};
+
 
 visualTypeSettings ={
     barChart:{
@@ -17,11 +16,16 @@ visualTypeSettings ={
 }
 
 function drawSettingViewBody() {
+    testParams = ["LabR", "FFR", "UnderGrnd", "GlzR", "Uvalue", "HVAC", "HeatRecov", "LabACH", "Plant", "Cooling", "Heating", "Lighting", "Equipment", "Fans", "Pumps", "PeakCool", "PeakHeat", "EUI"];
+    //_settings = {};
+    //console.log();
     
-    var params = testParams;//TODO: _parameters will be the final
+    
+    // params  = _parameters;
     var settingViewBodyDIV = d3.select("#settingViewBody");
+    var params = d3.keys(_settings.parameters);//TODO: _parameters will be the final
     // check _settings if exist
-    if(_settings == null) _settings = {};
+    if(_settings === null) _settings = {};
     if(!_settings.hasOwnProperty("parameters")){
         _settings["parameters"] = {}
         params.forEach(paramName=>{
@@ -32,10 +36,14 @@ function drawSettingViewBody() {
             }
         })
     }
-    if(!_settings.hasOwnProperty("visuals")){
-        _settings["visuals"] = {}
-        _settings.visuals["options_image"]={'type': 'image', 'width': 12, 'show':true}
-    }
+
+    
+    // console.log(_settings);
+    
+    // if(!_settings.hasOwnProperty("visuals")){
+    //     _settings["visuals"] = {}
+    //     _settings.visuals["options_image"]={'type': 'image', 'width': 12, 'show':true}
+    // }
     //console.log(_settings);
     
     
@@ -49,18 +57,22 @@ function drawSettingViewBody() {
     };
 
     newUserSetting = _settings;
+    console.log(_settings);
+    
 
     
     var visSettingDIV = settingViewBodyDIV.select("#visSettingList");
-    drawVisualsSettingViewBody(visSettingDIV, newUserSetting.visuals);
+    drawVisualsSettingViewBody(visSettingDIV, _settings.visuals);
 
-    var paraSettingDIV = settingViewBodyDIV.select("#dimSettingList");
-    drawParamsSettingViewBody(paraSettingDIV,params);
+    // var paraSettingDIV = settingViewBodyDIV.select("#dimSettingList");
+    drawParamsSettingViewBody(params);
 }
 
 _visChartList={DataMatric:{}}
 
 function addBarChart(params) {
+    console.log(params);
+    
     var barChartTempDiv = d3.select("#barChartTemp");
     var newChartID = "chart_"+genID();
     var newChartInst = visualTypeSettings.barChart;
@@ -155,11 +167,14 @@ function drawVisualsSettingViewBody(parentDIV,visualTypeSettings) {
     
 }
 
-function drawParamsSettingViewBody(parentDIV,params) {
-    
+function drawParamsSettingViewBody(params) {
+    var parentDIV = d3.select("#dimSettingList");
     //remove current
     parentDIV.selectAll(".panel-default").remove();
 
+    console.log("Making params setting view");
+    console.log(params);
+    
     var selectList = parentDIV.selectAll('.panel-default')
                         .data(params).enter()
                         .append("div")
@@ -238,7 +253,7 @@ function addAvailableChartAsOptions(d, i){
         .append("div")
         .attr("class", "checkbox")
         .append("label").text(chartName)
-        .append("input").attr("type", "checkbox").attr("value", "checkbox").attr("id", function(d){return d;})
+        .append("input").attr("type", "checkbox").attr("value", "checkbox").attr("id", chartName)
         .on('click',function(e){
         var ifChecked = d3.select(this).property("checked");
         var chartName = d3.select(this).property("id");
@@ -299,28 +314,27 @@ function string_as_unicode_escape(input) {
 function updateView(){
     _settings =  newUserSetting;
     console.log("calling buildAll()");
-    
-    //buildAll();
+    d3.select("#content").selectAll("*").remove();
+    d3.select("#metrics").selectAll("*").remove();
+    buildAll();
 }
 
 function saveSettings(){
    
-   
-
     var exportJson = _settings;
 
     var JsonContent = "data:attachment/json;charset=utf-8,";
-    var settingStr = JSON.stringify(_settings);
-    console.log(settingStr);
-    JsonContent += encodeURI(settingStr);
+    JsonContent += encodeURI(JSON.stringify(exportJson));
 
     var a = d3.select("body")
         .append("a")
+        .attr("id","dnlink")
         .attr("href", JsonContent)
         .attr("target", '_blank')
-        .attr("download", 'settings.json');
+        .attr("download", 'settingsLite.json');
 
-    a[0][0].click();
+    document.getElementById("dnlink").click();
+    //a[0][0].click();
     //buildAll();
 }
 

@@ -1,14 +1,11 @@
 
 buildAll = function() {
-  // put all data into a central dictionary to look up ouptus by inputs.
-
   // dictionaries for different visualizations
   barCharts = {}
   metrics = {}
   image = {}
 
   // get the first row of data, which will be used to generate the default starting grahpics
-  defaultData = _allData[0]
   paramsForViz = d3.keys(_settings['parameters'])
   visuals = d3.keys(_settings['visuals'])
 
@@ -22,7 +19,7 @@ buildAll = function() {
         vizType = _settings['visuals'][vizName]["type"]
         if (vizType == 'barChart') {
           if (vizName in barCharts) {
-            barCharts[vizName]['data'].push(parseFloat(defaultData[paramName]))
+            barCharts[vizName]['indices'].push(paramName)
             if ("longName" in _settings['parameters'][paramName]){
               barCharts[vizName]['props']['dataNames'].push(_settings['parameters'][paramName]["longName"])
             } else{
@@ -30,7 +27,7 @@ buildAll = function() {
             }
           } else {
             barCharts[vizName] = {'props': _settings['visuals'][vizName]}
-            barCharts[vizName]['data'] = [parseFloat(defaultData[paramName])]
+            barCharts[vizName]['indices'] = [paramName]
             barCharts[vizName]['props']['dataNames'] = []
             if ("longName" in _settings['parameters'][paramName]){
               barCharts[vizName]['props']['dataNames'].push(_settings['parameters'][paramName]["longName"])
@@ -47,14 +44,15 @@ buildAll = function() {
         if ("unit" in _settings['parameters'][paramName]){
           metrics[vizName]['props']['units'] = _settings['parameters'][paramName]["unit"]
         }
-        metrics[vizName]['data'] = [parseFloat(defaultData[paramName])]
+        metrics[vizName]['indices'] = [paramName]
       }
     }
   }
 }
 
+  _currentRow = _allData[0]
   // assemble the image in the scene
-  if ("img" in defaultData) {
+  if ("img" in _currentRow) {
     imgProps = {}
 
     // get any over-ridden properties
@@ -65,20 +63,29 @@ buildAll = function() {
       }
     }
 
-    image['object'] = buildImage(defaultData['img'], imgProps)
+    image['object'] = buildImage(_currentRow['img'], imgProps)
   }
 
   // assemble all of the bar charts in the scene
   barChartNames = d3.keys(barCharts)
   for (i = 0; i < barChartNames.length; i++) {
     barChartName =  barChartNames[i]
-    barCharts[barChartName]['object'] = buildChart(barCharts[barChartName]['data'], barCharts[barChartName]['props'])
+    barCharts[barChartName]['object'] = buildChart(getData(barCharts[barChartName]['indices']), barCharts[barChartName]['props'])
   }
 
   // assemble all of the metrics in the scene
   metricNames = d3.keys(metrics)
   for (i = 0; i < metricNames.length; i++) {
     metricName =  metricNames[i]
-    metrics[metricName]['object'] = buildMetric(metrics[metricName]['data'], metrics[metricName]['props'])
+    metrics[metricName]['object'] = buildMetric(getData(metrics[metricName]['indices'])[0], metrics[metricName]['props'])
   }
+}
+
+
+getData = function(indices){
+  finalList = []
+  for  (k = 0; k < indices.length; k++) {
+    finalList.push(parseFloat(_currentRow[indices[k]]))
+  }
+  return finalList
 }

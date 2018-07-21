@@ -33,19 +33,41 @@ function drawSettingViewBody() {
             'EUI [kBtu/sf]': {'unit':'kBtu/sf', 'visuals':['eui']}
         }
     };
+    var visSettingDIV = settingViewBodyDIV.select("#visSettingList");
+    //drawVisualsSettingViewBody(visSettingDIV);
 
+    var paraSettingDIV = settingViewBodyDIV.select("#dimSettingList");
+    drawParamsSettingViewBody(paraSettingDIV,params);
+}
     
-    console.log(JSON.stringify(newUserSetting));
+    //console.log(JSON.stringify(newUserSetting));
     
-
-    //remove current
-    settingViewBodyDIV.selectAll(".panel-default").remove();
-
-    var selectList = settingViewBodyDIV.selectAll('.panel-default')
+function drawVisualsSettingViewBody(parentDIV) {
+    var selectList = parentDIV.selectAll('.panel-default')
                         .data(params).enter()
                         .append("div")
                         .attr("class", "panel panel-default");
 
+    var panelHeading = selectList.append("div").attr("class", "panel-heading");
+
+    panelHeading.append("h4")
+                .attr("class", "panel-title")
+                    .append("a")
+                    .attr("data-toggle", "collapse")
+                    .attr("data-parent", "#dimSettingList")
+                    .attr("href", function(d){return "#setting"+ string_as_unicode_escape(d);})
+                    .text(function(d){return d;});
+}
+
+function drawParamsSettingViewBody(parentDIV,params) {
+    
+    //remove current
+    parentDIV.selectAll(".panel-default").remove();
+
+    var selectList = parentDIV.selectAll('.panel-default')
+                        .data(params).enter()
+                        .append("div")
+                        .attr("class", "panel panel-default");
 
     var panelHeading = selectList.append("div").attr("class", "panel-heading");
 
@@ -97,6 +119,7 @@ function drawSettingViewBody() {
         }
         newUserSetting.parameters[d].unit = value;
     });
+
 
 }
 

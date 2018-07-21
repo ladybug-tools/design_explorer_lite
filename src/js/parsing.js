@@ -354,7 +354,7 @@ var googleObject ={
     },
     "jsonFiles": {},
     "settingFiles": {
-        "settings_lite.json": "https://www.googleapis.com/drive/v3/files/1bpFYTuD6-x9UE3CEsIqWqOzshCgfIOmH?alt=media&key=AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY"
+        "settings_lite.json": "https://www.googleapis.com/drive/v3/files/10NAtvhE7-MbXSJJprJ_KFY09ZFIgoYsO?alt=media&key=AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY
     }
 }
 

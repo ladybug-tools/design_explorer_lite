@@ -89,27 +89,25 @@
         
         <!-- Modal body -->
         <div class="modal-body" id="settingViewBody">
-
-            <div class="panel-group" id="dimSettingList">
-                    <!--placeholder for scale setting list-->
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#dimSettingList" href="#settingStudyInfo">Study Information</a>
-                            </h4>
-                        </div>
-                        <div id="settingStudyInfo" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item form-inline">Study Name: <input id="studyNameInput" class="form-control input-sm" type="text" style="width: 80%"></li>
-                                    <li class="list-group-item form-inline">Study Date: <input id="studyDateInput" class="form-control input-sm" type="text" style="width: 80%;    margin-left: 1.1em;"></li>
-                                    <li class="list-group-item form-inline">Password: <input class="form-control input-sm" placeholder="WIP" type="text" style="width: 40%; margin-left: 1.6em;" disabled><input class="form-control input-sm" placeholder="Confirm" type="text" style="width: 39%;" disabled></li>
-                                </ul>
-                            </div>
-                        </div>
+            <button data-toggle="collapse" data-target="#visualSettingView">Collapsible</button>
+            <button data-toggle="collapse" data-target="#paramSettingView">paramSettingView</button>
+            <div id="visualSettingView" class="collapse">
+                <div class="card card-body">
+                    <div class="panel-group" id="visSettingList">
+                            <!--placeholder for visuals setting list-->
                     </div>
-
                 </div>
+            </div>
+            <div id="paramSettingView" class="collapse">
+                <div class="card card-body">
+                    <div class="panel-group" id="dimSettingList">
+                            <!--placeholder for parameters setting list-->
+                    </div>
+                </div>
+                    
+            </div>
+
+            
         </div>
         
         <!-- Modal footer -->

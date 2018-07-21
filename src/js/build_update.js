@@ -97,10 +97,10 @@ buildAll = function() {
       paramName = paramNames[i]
       if (paramName.startsWith('out:')) {
         metrics[paramName] = {}
-        metrics[paramName]['indices'] = paramName
+        metrics[paramName]['indices'] = [paramName]
       }
     }
-    console.log(metrics)
+
     // assemble all of the metrics in the scene
     metricNames = d3.keys(metrics)
     for (i = 0; i < metricNames.length; i++) {

@@ -17,7 +17,7 @@ buildImage = function(imageName, propertiesDict) {
   }
 
   // convert svg width in 12/ths to pixels.
-  windowTwelf = window.innerWidth/12
+  windowTwelf = parseInt(window.innerWidth/12) - 5
   width = windowTwelf * width
   height = windowTwelf * height
 

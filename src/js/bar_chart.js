@@ -39,8 +39,8 @@ buildChart = function(dataList, propertiesDict) {
 
   // convert svg width in 12/ths to pixels.
   windowTwelf = window.innerWidth/12
-  svgwidth = windowTwelf * svgwidth
-  svgheight = windowTwelf * svgheight
+  svgwidth = parseInt(windowTwelf * svgwidth) - 5
+  svgheight = parseInt(windowTwelf * svgheight) - 5
 
   // calculate chart properties
   width = svgwidth - margin.left - margin.right
@@ -56,7 +56,7 @@ buildChart = function(dataList, propertiesDict) {
   // auto-set the max val if it isn't set to anything
   if (maxVal == null){
     if (stacked == true){
-      maxVal = topBarFactor * dataList.reduce(function(a, b) { return a + b; }, 0);
+      maxVal = topBarFactor * dataList.reduce(function(a, b) { return a + b; }, 0)
     } else {
       maxVal = topBarFactor * Math.max(...dataList)
     }
@@ -156,7 +156,7 @@ buildChart = function(dataList, propertiesDict) {
         .attr("class", "dataBar")
         .style("stroke", "#000")
         .style("stroke-width", "0.05em");
-      stackIncrement += dataColors[i]
+      stackIncrement += dataList[i]
     }
   } else{
     for (i = 0; i < dataList.length; i++) {

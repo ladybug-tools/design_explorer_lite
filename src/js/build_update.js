@@ -52,6 +52,4 @@ buildAll = function() {
     barChartName =  barChartNames[i]
     barCharts[barChartName]['object'] = buildChart(barCharts[barChartName]['data'], barCharts[barChartName]['props'])
   }
-
-  console.log(barCharts)
 }

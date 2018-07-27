@@ -35,8 +35,8 @@ function getCsvObj(googleObject){
         //add settings file to global _settings
         _settings = settingsJson;
         parseCsv(d);
-        console.log('pushed parameters and settings')
-        console.log('finished parsing csv')
+        //console.log('pushed parameters and settings')
+        //console.log('finished parsing csv')
         buildAll();
       });
   });
@@ -52,32 +52,31 @@ function parseCsv(data){
     _settingsFromFile = true
 
 
-    console.log('Starting parse csv')
+    //console.log('Starting parse csv')
     columnNames = d3.keys(_allData[0]);
-    console.log(columnNames)
+    //console.log(columnNames)
     columnNames.forEach(columnName => {
         columnSets[columnName] = new Set();
     });
-    console.log('made new sets')
+    //console.log('made new sets')
 
     data.forEach(row => {
         addRowToSets(row, columnNames);
     });
 
-    console.log('added row to sets')
+    //console.log('added row to sets')
     var maxSliderRange = calculateMaxOfEachSet();
     setDefaultCurrentValues();
-    console.log('calculated max of sets')
-    //console.log(maxSliderRange)
+    //console.log('calculated max of sets')
 
     columnNames.forEach((columnName, colIndex) => {
         var name = '';
         var isEven = colIndex % 2;
         var match = columnRegex.exec(columnName);
         if(match) {
-            console.log('got match on columnName: '+columnName)
-            console.log('match object:')
-            console.log(match)
+            //console.log('got match on columnName: '+columnName)
+            //console.log('match object:')
+            //console.log(match)
             name = match[2];
             _parameters.push(name);
             columnToNameMap[columnName] = name;
@@ -90,20 +89,15 @@ function parseCsv(data){
             }
             if(match[1] === 'in'){
                 //this is an input column, create a slider and event handler.
-                console.log('found in for column:'+columnName);
+                //console.log('found in for column:'+columnName);
                 makeInputSlider(name, unitSuffix, longName, maxSliderRange[columnName], isEven, columnName);
-                console.log('made input slider')
+                //console.log('made input slider')
                 makeInputSliderEventHandler(name, columnName, unitSuffix);
-                console.log('made slider event handler');
+                //console.log('made slider event handler');
             } else {
                 //this is an output, create a metric div
-                console.log('is output column:'+columnName);
-                //makeOutputDiv(name, unitSuffix);
+                //console.log('is output column:'+columnName);
             }
-        } else {
-            console.log('did not get match on columnName: '+columnName+' is it the img column?')
-            //must be the 'img' column... or something is wrong.
-            //consider throwing error at some other time?
         }
     });
     if (_settings == null){
@@ -120,15 +114,7 @@ function parseCsv(data){
 
 
 function makeInputSlider(name, unitSuffix, longName, max, isEven, columnName){
-    console.log('making input slider for name: '+name+' with unit suffix: '+unitSuffix);
-    /*
-    <div class="slider" id="progRatio">
-    <label>Lab to NonLab Ratio</label>
-    <input type="range" name="prog" id="prog" value="2" min="0" max="2" step = "1">
-    <p id="progoutput">60%</p>
-    </div>
-    */
-   //<fieldset id="sliderFields" class="inputgroup">
+    //console.log('making input slider for name: '+name+' with unit suffix: '+unitSuffix);
    var styleString = isEven ? evenSliderBackground : oddSliderBackground;
    $('#sliderFields').append(
     '<div class="slider" id="'+name+'slider" style="'+styleString+'">'+
@@ -148,10 +134,10 @@ function makeInputSliderEventHandler(name, columnName, unitSuffix){
     });
     */
    var idName = "#"+name;
-   console.log(idName);
+   //console.log(idName);
    var outPutName = idName + "output"
    $(idName).on("input", function(){
-       console.log('firing event for slider: '+name);
+       //console.log('firing event for slider: '+name);
        var currentValue = $(this).val();
     //    console.log('current value is '+currentValue)
     //    console.log('from dictionary, that should be: '+_columnDictionaries[columnName][currentValue])
@@ -164,21 +150,17 @@ function makeInputSliderEventHandler(name, columnName, unitSuffix){
 }
 
 function getSliderStateAndPushCsvRow(){
-    console.log('getting state and pushing function')
+    //console.log('getting state and pushing function')
     var currentValuesString = "";
     d3.keys(_currentValues).forEach(inputValue => {
         currentValuesString += _currentValues[inputValue]
     })
-    console.log('getting csv row for: '+currentValuesString);
+    //console.log('getting csv row for: '+currentValuesString);
     _currentRow = _data[currentValuesString];
-    console.log('set currentRow');
-    console.log(_currentRow);
+    //console.log('set currentRow');
+    //console.log(_currentRow);
     updateAll();
 }
-
-// function makeOutputDiv(name, unitSuffix){
-//     $("#metrics").append('<div class="slider2" id="'+name+'div"><div id="'+name+'"></div><p style="margin-top:3px;">'+unitSuffix+'<br>'+name+'</p></div>');
-// }
 
 function setDefaultCurrentValues(){
     columnNames.forEach(columnName => {
@@ -191,14 +173,14 @@ function setDefaultCurrentValues(){
 function calculateMaxOfEachSet(){
 
     var maxSliderRange = {}
-    console.log('calculating max of each set and making dictionaries');
+    //console.log('calculating max of each set and making dictionaries');
     columnNames.forEach(columnName => {
-        console.log('column name: '+columnName)
+        //console.log('column name: '+columnName)
         var columnEntriesArray = Array.from(columnSets[columnName]).sort();
-        console.log('from set: ')
-        console.log(columnSets[columnName])
-        console.log('sorted columnEntriesArray');
-        console.log(columnEntriesArray);
+        //console.log('from set: ')
+        //console.log(columnSets[columnName])
+        //console.log('sorted columnEntriesArray');
+        //console.log(columnEntriesArray);
         _columnDictionaries[columnName] = {};
         var key = 0;
         columnEntriesArray.forEach(arrayEntrySorted =>{

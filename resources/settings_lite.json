@@ -3,8 +3,8 @@
 		"bar_chart_1": {
 			"type": "barChart",
 			"dataColors": [
-				"rgb(255,0,102)",
 				"rgb(0,176,240)",
+				"rgb(255,0,102)",
 				"rgb(255,255,0)",
 				"rgb(191,191,191)",
 				"rgb(166,216,110)",
@@ -15,7 +15,7 @@
 				"EUI",
 				"kBtu/sf"
 			],
-			"maxVal": 200
+			"maxVal": 160
 		},
 		"bar_chart_2": {
 			"type": "barChart",

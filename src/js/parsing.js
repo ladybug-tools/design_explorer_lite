@@ -84,7 +84,7 @@ function parseCsv(data){
               var longName = _settings.parameters[columnName].longName || columnName;
               var unitSuffix = _settings.parameters[columnName].unit || "";
             } else {
-              var longName = columnName
+              var longName = columnName.split('in:')[1]
               var unitSuffix = ''
             }
             if(match[1] === 'in'){
@@ -120,7 +120,7 @@ function makeInputSlider(name, unitSuffix, longName, max, isEven, columnName){
     '<div class="slider" id="'+name+'slider" style="'+styleString+'">'+
     '<label>'+longName+'</label>'+
     '<input type="range" name="'+name+'" id="'+name+'" value="0" min="0" max="'+max+'" step = "1">'+
-    '<p id="'+name+'output">'+_columnDictionaries[columnName][0]+unitSuffix+'</p>'+
+    '<div class="slideroutput"><p id="'+name+'output">'+_columnDictionaries[columnName][0]+unitSuffix+'</p></div>'+
     '</div>');
 }
 

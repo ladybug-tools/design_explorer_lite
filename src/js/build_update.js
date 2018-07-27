@@ -7,6 +7,8 @@ buildAll = function() {
   d3.selectAll('.slider')
     .style("width", width.toString()+'px')
     .style("height", '100px')
+  d3.selectAll('input[type=range]')
+    .style('width', (width-70).toString()+'px')
 
   // dictionaries for different visualizations
   _barCharts = {}

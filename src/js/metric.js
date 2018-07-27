@@ -7,7 +7,7 @@ precisionRound = function(number, precision) {
 buildMetric = function(metricValue, propertiesDict) {
   // set default values
   width = 4
-  height = 1
+  height = 100
   decimals = 1
   units = ""
   longName = ""
@@ -33,7 +33,9 @@ buildMetric = function(metricValue, propertiesDict) {
   // convert svg width in 12/ths to pixels.
   windowTwelf = parseInt(window.innerWidth/12)
   width = (windowTwelf * width) - 5
-  height = (windowTwelf * height) - 5
+  if (height <= 12) {
+    height = (windowTwelf * height) - 5
+  }
 
   // add the image to the svg
   var svgT = d3.select("#metrics").append("svg")

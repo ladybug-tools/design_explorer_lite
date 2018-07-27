@@ -175,20 +175,17 @@ function calculateMaxOfEachSet(){
     var maxSliderRange = {}
     //console.log('calculating max of each set and making dictionaries');
     columnNames.forEach(columnName => {
-        //console.log('column name: '+columnName)
-        var columnEntriesArray = Array.from(columnSets[columnName]).sort();
-        //console.log('from set: ')
-        //console.log(columnSets[columnName])
-        //console.log('sorted columnEntriesArray');
-        //console.log(columnEntriesArray);
-        _columnDictionaries[columnName] = {};
-        var key = 0;
-        columnEntriesArray.forEach(arrayEntrySorted =>{
-            // console.log('Adding key: '+key+' for columnName: '+columnName+' with value of:'+arrayEntrySorted)
-            _columnDictionaries[columnName][key] = arrayEntrySorted;
-            key++;
-        });
-        maxSliderRange[columnName] = columnEntriesArray.length -1;
+        if (columnName.startsWith('in:')){
+          var columnEntriesArray = Array.from(columnSets[columnName])
+          _columnDictionaries[columnName] = {};
+          var key = 0;
+          columnEntriesArray.forEach(arrayEntrySorted =>{
+              // console.log('Adding key: '+key+' for columnName: '+columnName+' with value of:'+arrayEntrySorted)
+              _columnDictionaries[columnName][key] = arrayEntrySorted;
+              key++;
+          });
+          maxSliderRange[columnName] = columnEntriesArray.length -1;
+        }
     });
 
     return maxSliderRange;

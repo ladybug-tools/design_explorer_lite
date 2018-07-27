@@ -1,15 +1,11 @@
 
 // BUILD ALL OF THE OUTPUT CONTENT
 buildAll = function() {
-  // set all slider divs to have the same width.
-  windowTwelf = parseInt(window.innerWidth/12)
-  width = (windowTwelf * 2) - 5
-  height = (windowTwelf * 1) - 5
-  d3.selectAll('.slider')
-    .style("width", width.toString()+'px')
-    .style("height", '100px')
-  d3.selectAll('input[type=range]')
-    .style('width', (width-70).toString()+'px')
+  // set styles of key elements on the paramSettingView
+  d3.selectAll('#study_results')
+    .style("width", window.innerWidth.toString()+'px')
+
+  stylizeSliders()
 
   // dictionaries for different visualizations
   _barCharts = {}

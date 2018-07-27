@@ -24,6 +24,7 @@
     <script src="./src/js/settings.js"></script>
     <script src="./src/js/getGFolderObj.js"></script>
     <script src="./src/js/build_update.js"></script>
+    <script src="./src/js/slider.js"></script>
     <script src="./src/js/bar_chart.js"></script>
     <script src="./src/js/image.js"></script>
     <script src="./src/js/metric.js"></script>
@@ -31,9 +32,10 @@
     <style>
     .slider {float:left;padding:10px;height:fit-content}
     .slideroutput {float:right;}
+    #study_results {margin:auto;}
     #inputSliders {font-family:sans-serif;outline:none;padding-top:15px;margin: 0 auto;}
     #summary {font-family:sans-serif;font-weight:bold;text-align:center;outline:none;padding-top:15px;margin: 0 auto;}
-    #content {margin: 0 auto;}
+    #content {margin: 0 auto;padding-top:15px}
     #input_sliders label { float:left;font-weight:bold;padding-bottom:10px;}
     input[type=range] { float:left;clear:left;margin-right:10px;}
     input[type=range]::-ms-track { background: transparent;border-color: transparent;color: transparent;-webkit-appearance: none}
@@ -60,23 +62,25 @@
     </button>
 
   <!-- sliders -->
-  <div id="input_sliders">
-    <form autocomplete="off">
-      <fieldset id="sliderFields">
-      </fieldset>
-    </form>
-  </div>
+  <div id="study_results">
+    <div id="input_sliders">
+      <form autocomplete="off">
+        <fieldset id="sliderFields">
+        </fieldset>
+      </form>
+    </div>
 
-  <!-- visual content, images, graphs -->
-  <div id="content">
-  </div>
+    <!-- visual content, images, graphs -->
+    <div id="content">
+    </div>
 
-  <!-- visual content, images, graphs -->
-  <div id="metrics">
+    <!-- visual content, images, graphs -->
+    <div id="metrics">
+    </div>
+    <script>
+      //call gobject, and pass it to parser
+    </script>
   </div>
-  <script>
-    //call gobject, and pass it to parser
-  </script>
 
   <!-- The loadingDataView -->
   <div class="modal fade" id="loadingDataView">

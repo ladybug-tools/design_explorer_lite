@@ -13,8 +13,6 @@
 
 
 var columnRegex = new RegExp(/((?:in)|(?:out)): ?(?:(\w*) ?(?:\[(.*)\])?)/i);
-var oddSliderBackground = "background-color:#f2f2f2";
-var evenSliderBackground = "background-color:#e6e6e6";
 var columnToNameMap = {};
 
 var columnSets = {};

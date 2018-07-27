@@ -1,0 +1,140 @@
+{
+	"visuals": {
+		"bar_chart_1": {
+			"type": "barChart",
+			"dataColors": [
+				"rgb(0,176,240)",
+				"rgb(255,0,102)",
+				"rgb(255,255,0)",
+				"rgb(191,191,191)",
+				"rgb(166,216,110)",
+				"rgb(119,185,49)"
+			],
+			"stacked": true,
+			"yAxisText": [
+				"EUI",
+				"kBtu/sf"
+			],
+			"maxVal": 160
+		},
+		"bar_chart_2": {
+			"type": "barChart",
+			"dataColors": [
+				"rgb(24,77,138)",
+				"rgb(168,5,0)"
+			],
+			"stacked": false,
+			"yAxisText": [
+				"Peak Load",
+				"(BTU/hr-sf)"
+			],
+			"maxVal": 20
+		},
+		"eui": {
+			"type": "metric"
+		},
+		"peakcool": {
+			"type": "metric"
+		},
+		"peakheat": {
+			"type": "metric"
+		},
+		"options_image": {
+			"type": "image",
+			"width": 6
+		}
+	},
+	"parameters": {
+		"in:LabR[%]": {
+			"longName": "Lab to NonLab Ratio",
+			"unit": "%"
+		},
+		"in:FFR [%]": {
+			"longName": "Facade-to-Floor",
+			"unit": "%"
+		},
+		"in:UnderGrnd [%]": {
+			"longName": "Fract Underground",
+			"unit": "%"
+		},
+		"in:GlzR [%]": {
+			"longName": "Glazing Ratio",
+			"unit": "%"
+		},
+		"in:Uvalue [IP]": {
+			"longName": "Window U-Value"
+		},
+		"in:HVAC": {
+			"longName": "HVAC Type"
+		},
+		"in:HeatRecov": {
+			"longName": "Heat Recovery"
+		},
+		"in:LabACH": {
+			"longName": "Lab Ventilation"
+		},
+		"in:Plant": {
+			"longName": "Thermal Source"
+		},
+		"out:Cooling": {
+			"longName": "cooling",
+			"unit": "kBtu/sf",
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"out:Heating": {
+		"longName": "heating",
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"out:Lighting": {
+			"longName": "lighting",
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"out:Equipment": {
+			"longName": "equipment",
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"out:Fans": {
+			"longName": "fans",
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"out:Pumps": {
+			"longName": "pumps",
+			"visuals": [
+				"bar_chart_1"
+			]
+		},
+		"out:EUI [kBtu/sf]": {
+			"longName": "energy use intensity",
+			"unit": "kBtu/sf",
+			"visuals": [
+				"eui"
+			]
+		},
+		"out:PeakCool [Btu/h-sf]": {
+			"longName": "peak cooling",
+			"unit": "Btu-h/sf",
+			"visuals": [
+				"bar_chart_2",
+				"peakcool"
+			]
+		},
+		"out:PeakHeat [Btu/h-sf]": {
+			"longName": "peak heating",
+			"unit": "Btu-h/sf",
+			"visuals": [
+				"bar_chart_2",
+				"peakheat"
+			]
+		}
+	}
+}

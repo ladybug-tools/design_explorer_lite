@@ -129,24 +129,11 @@ updateAll = function() {
 
   // update all of the bar charts
   barChartNames = d3.keys(_barCharts)
-  if (barChartNames.length > 0){
-    barChartData = getData(_barCharts[barChartNames[0]]['indices'])
-    barchartObj1 = _barCharts[barChartNames[0]]['object']
-    updateChart(barchartObj1, barChartData)
-  }
-  if (barChartNames.length > 1){
-    barChartData = getData(_barCharts[barChartNames[1]]['indices'])
-    barchartObj2 = _barCharts[barChartNames[1]]['object']
-    updateChart(barchartObj2, barChartData)
-  }
-  //updateChart(barchartObj, barChartData)
-  //for (i = 0; i < barChartNames.length; i++) {
-  //  console.log(barChartName)
-  //  barChartName =  barChartNames[i]
-  //  barchartObj = _barCharts[barChartName]['object']
-  //  barChartData = getData(_barCharts[barChartName]['indices'])
-  //  updateChart(barchartObj, barChartData)
-  //}
+  barChartNames.forEach((barChartName) => {
+    barchartObj = _barCharts[barChartName]['object']
+    barChartData = getData(_barCharts[barChartName]['indices'])
+    updateChart(barchartObj, barChartData)
+  });
 
   // update the metricNames
   for (i = 0; i < metricNames.length; i++) {

@@ -63,7 +63,7 @@ buildAll = function() {
     }
   }
 
-    _currentRow = _allData[0]
+    getSliderStateAndPushCsvRow(false)
     // assemble the image in the scene
     if ("img" in _currentRow) {
       imgProps = {}
@@ -94,7 +94,7 @@ buildAll = function() {
   }
   else{
     // There is no settings_lite.json file and so we will just make a default image and metricNames
-    _currentRow = _allData[0]
+    getSliderStateAndPushCsvRow(false)
     // assemble the image in the scene
     if ("img" in _currentRow) {
       imgProps = {}
@@ -115,7 +115,8 @@ buildAll = function() {
     metricNames = d3.keys(metrics)
     for (i = 0; i < metricNames.length; i++) {
       metricName =  metricNames[i]
-      metrics[metricName]['object'] = buildMetric(getData(metrics[metricName]['indices'])[0], {'longName': metrics[metricName]['indices']})
+      lonName = metricName.split('out:')[1]
+      metrics[metricName]['object'] = buildMetric(getData(metrics[metricName]['indices'])[0], {'longName': lonName})
     }
   }
 

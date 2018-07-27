@@ -149,7 +149,7 @@ function makeInputSliderEventHandler(name, columnName, unitSuffix){
    })
 }
 
-function getSliderStateAndPushCsvRow(){
+function getSliderStateAndPushCsvRow(update=true){
     //console.log('getting state and pushing function')
     var currentValuesString = "";
     d3.keys(_currentValues).forEach(inputValue => {
@@ -159,7 +159,9 @@ function getSliderStateAndPushCsvRow(){
     _currentRow = _data[currentValuesString];
     //console.log('set currentRow');
     //console.log(_currentRow);
-    updateAll();
+    if (update == true) {
+      updateAll();
+    }
 }
 
 function setDefaultCurrentValues(){

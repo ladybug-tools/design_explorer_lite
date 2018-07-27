@@ -32,9 +32,9 @@ buildMetric = function(metricValue, propertiesDict) {
 
   // convert svg width in 12/ths to pixels.
   windowTwelf = parseInt(window.innerWidth/12)
-  width = (windowTwelf * width) - 5
+  width = (windowTwelf * width) - 2
   if (height <= 12) {
-    height = (windowTwelf * height) - 5
+    height = (windowTwelf * height)
   }
 
   // add the image to the svg

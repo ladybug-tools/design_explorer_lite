@@ -21,6 +21,10 @@ var columnSets = {};
 var _parameters =[];
 
 function getCsvObj(googleObject){
+  // remove any existing content on the page
+  deleteAll()
+  _settings = null
+
   //read csv file from google drive
   _googleObject = googleObject
   _columnDictionaries = {};

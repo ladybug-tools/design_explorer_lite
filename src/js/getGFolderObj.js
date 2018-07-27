@@ -4,11 +4,17 @@ csvFiles:{},
 imgFiles:{},
 jsonFiles:{},
 settingFiles:{}
-}; 
+};
 
 function LoadFromCloud(dataMethod) {
+    // clear all data within the google object
+    _googleReturnObj.csvFiles = {}
+    _googleReturnObj.imgFiles = {}
+    _googleReturnObj.jsonFiles = {}
+    _googleReturnObj.settingFiles = {}
+
     var serverFolderLink;
-    
+
 
     //this is for the short link with ID
     if (dataMethod === "URL") {
@@ -16,7 +22,7 @@ function LoadFromCloud(dataMethod) {
 
         var inUrl = window.location.href;
         decodeUrlID(
-            inUrl, 
+            inUrl,
             function(d){
                 loadFromUrl(d);
             }
@@ -37,7 +43,7 @@ function loadFromUrl(rawUrl) {
 
         //this is from Google or MS
         prepareGFolder(d);
-        
+
         //console.log(link);
     })
 }
@@ -52,7 +58,7 @@ function checkInputLink(link, callback){
 
     // Only supports the Google Drive now
     var GFolderID = getGFolderID(link);
-    //folderLinkObj.DE_PW = "DE_G"; 
+    //folderLinkObj.DE_PW = "DE_G";
     folderLinkObj.url ="https://www.googleapis.com/drive/v3/files?q=%27" + GFolderID + "%27+in+parents&key=" +Gkey;
     folderLinkObj.type = "GoogleDrive";
 
@@ -96,11 +102,11 @@ function decodeUrlID(rawUrl, callback) {
     if(DEID !== undefined) {
         linkID = DEID;
         //console.log(linkID)
-        
+
         if (linkID.length === 6) {
             var url = "https://www.googleapis.com/urlshortener/v1/url?key="+ Gkey+"&shortUrl=http://goo.gl/"+linkID;
-           
-            d3.json(url, 
+
+            d3.json(url,
                 function(d){
                     var GID = (getUrlVars(d.longUrl).ID);
                     serverFolderLink = decodeUrl(GID);
@@ -111,7 +117,7 @@ function decodeUrlID(rawUrl, callback) {
             serverFolderLink = decodeUrl(linkID);
             callback(serverFolderLink);
         }
-        
+
 
     }else {
 
@@ -156,7 +162,7 @@ function prepareGFolder(folderLink) {
                     GLink = "https://www.googleapis.com/drive/v3/files/" + item.id + "?alt=media&key=" + Gkey;
                     //this item is a data csv file
                     csvFiles[item.name] = GLink;
-                    
+
                 }else if(item.mimeType.startsWith("image")){
                     GLink = "https://docs.google.com/uc?id=" + item.id + "&export=download";
                     //this item is a image file
@@ -166,7 +172,7 @@ function prepareGFolder(folderLink) {
                     GLink = "https://www.googleapis.com/drive/v3/files/" + item.id + "?alt=media&key=" + Gkey;
 
                     if (item.name.startsWith("setting")) {
-                        //this item is a Design Explore's setting file 
+                        //this item is a Design Explore's setting file
                         settingFiles[item.name] = GLink;
                     } else {
                         //this item is a json model
@@ -176,7 +182,7 @@ function prepareGFolder(folderLink) {
 
             });
 
-        } 
+        }
 
         $.extend(_googleReturnObj.csvFiles, csvFiles);
         $.extend(_googleReturnObj.imgFiles, imgFiles);
@@ -185,7 +191,7 @@ function prepareGFolder(folderLink) {
         //console.log(data);
 
         if (data.nextPageToken !== undefined) {
-            
+
             if (folder.url.search("&pageToken=") > 0) {
                 folder.url = folder.url.split("&pageToken=", 1)[0];
             }
@@ -195,31 +201,31 @@ function prepareGFolder(folderLink) {
             prepareGFolder(folder);
 
         } else if (data["children@odata.nextLink"] !== undefined) {
-            
+
             folder.url =  data["children@odata.nextLink"];
 
             prepareGFolder(folder);
 
         } else if (data["@odata.nextLink"] !== undefined) {
-            
+
             folder.url =  data["odata.nextLink"];
 
             prepareGFolder(folder);
 
         }else { //this is the last page, so return googleReturnObj directly
-            
+
             var csvFile = _googleReturnObj.csvFiles["data.csv"];
-            
+
             if (csvFile === undefined) {
                 alert("Could not find the data.csv file in this folder, please double check!\n\rThis might because Google Drive is processing the newly uploaded files, please wait a couple minutes!");
             } else {
                 //readyToLoad(csvFile);
-                
-                console.log(_googleReturnObj);
+
+                //console.log(_googleReturnObj);
                 getCsvObj(_googleReturnObj);
-                
+
             }
-   
+
         }
 
 

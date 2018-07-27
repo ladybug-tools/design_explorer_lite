@@ -1,4 +1,5 @@
 
+// BUILD ALL OF THE OUTPUT CONTENT
 buildAll = function() {
   // set all slider divs to have the same width.
   windowTwelf = parseInt(window.innerWidth/12)
@@ -122,7 +123,7 @@ buildAll = function() {
 
 }
 
-
+// UPDATE ALL OF THE OUTPUT CONTENT
 updateAll = function() {
   // update the image
   updateImage(image['object'], _currentRow['img'])
@@ -149,4 +150,13 @@ getData = function(indices){
     finalList.push(parseFloat(_currentRow[indices[k]]))
   }
   return finalList
+}
+
+// DELETE ALL OF THE OUTPUT CONTENT
+deleteAll = function() {
+  // delete all output svg grahpics
+  d3.selectAll('svg').remove();
+
+  // delete all input slider divs
+  d3.selectAll('.slider').remove();
 }

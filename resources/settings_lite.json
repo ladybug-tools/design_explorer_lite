@@ -39,7 +39,7 @@
 		"peakheat": {
 			"type": "metric"
 		},
-		"options_image": {
+		"img": {
 			"type": "image",
 			"width": 6
 		}

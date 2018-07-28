@@ -10,7 +10,7 @@ buildAll = function() {
   // dictionaries for different visualizations
   _barCharts = {}
   metrics = {}
-  image = {}
+  images = {}
 
   if (_settingsFromFile == true){
     // There is already a settings_lite.json file that will help us build the page.
@@ -62,18 +62,23 @@ buildAll = function() {
 
     getSliderStateAndPushCsvRow(false)
     // assemble the image in the scene
-    if ("img" in _currentRow) {
-      imgProps = {}
+    d3.keys(_currentRow).forEach((key) => {
+      if (key.startsWith('img')) {
+        imgFound = false
 
-      // get any over-ridden properties
-      for (i = 0; i < visuals.length; i++) {
-        vizName = visuals[i]
-        if (_settings['visuals'][vizName]["type"] == 'image'){
-          imgProps = _settings['visuals'][vizName]
+        // get any over-ridden properties
+        visuals.forEach((vizName) => {
+          if (_settings['visuals'][vizName]["type"] == 'image' && key == vizName){
+            imgFound = true
+            images[key] = {}
+            images[key]['props'] = _settings['visuals'][vizName]
+          }
+        });
+        if (imgFound == true) {
+          images[key]['object'] = buildImage(_currentRow[key], images[key]['props'])
         }
       }
-      image['object'] = buildImage(_currentRow['img'], imgProps)
-    }
+    });
 
     // assemble all of the bar charts in the scene
     barChartNames = d3.keys(_barCharts)
@@ -92,11 +97,18 @@ buildAll = function() {
   else{
     // There is no settings_lite.json file and so we will just make a default image and metricNames
     getSliderStateAndPushCsvRow(false)
-    // assemble the image in the scene
-    if ("img" in _currentRow) {
-      imgProps = {}
-      image['object'] = buildImage(_currentRow['img'], {})
-    }
+
+    // assemble the image(s) in the scene
+    d3.keys(_currentRow).forEach((key) => {
+      if (key.startsWith('img')) {
+        images[key] = {}
+      }
+    });
+    // set a default width based on the number of images there are
+    imgWidth = 12/d3.keys(images).length
+    d3.keys(images).forEach((image) => {
+      images[image]['object'] = buildImage(_currentRow[image], {'width': imgWidth})
+    });
 
     // assemble a list of output metrics.
     paramNames = d3.keys(_currentRow)
@@ -122,11 +134,12 @@ buildAll = function() {
 // UPDATE ALL OF THE OUTPUT CONTENT
 updateAll = function() {
   // update the image
-  updateImage(image['object'], _currentRow['img'])
+  d3.keys(images).forEach((image) => {
+    updateImage(images[image]['object'], _currentRow[image])
+  });
 
   // update all of the bar charts
-  barChartNames = d3.keys(_barCharts)
-  barChartNames.forEach((barChartName) => {
+  d3.keys(_barCharts).forEach((barChartName) => {
     barchartObj = _barCharts[barChartName]['object']
     barChartData = getData(_barCharts[barChartName]['indices'])
     updateChart(barchartObj, barChartData)

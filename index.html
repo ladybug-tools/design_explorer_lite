@@ -19,7 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-
+    <!-- Custom javascript for the tool -->
     <script src="./src/js/parsing.js"></script>
     <script src="./src/js/settings.js"></script>
     <script src="./src/js/getGFolderObj.js"></script>
@@ -29,28 +29,8 @@
     <script src="./src/js/image.js"></script>
     <script src="./src/js/metric.js"></script>
 
-    <style>
-    .slider {float:left;padding:10px;height:fit-content}
-    .slideroutput {float:right;}
-    .logo {padding-right:30px;}
-    .btn-default {border-radius:20px;margin-right:20px;margin-top:10px;float:right;}
-    .btn-default:hover {background-color:#D3D3D3;border-color:#D3D3D3;}
-    #header {margin-bottom:10px;}
-    #study_results {margin:auto;}
-    #inputSliders {font-family:sans-serif;outline:none;padding-top:15px;margin: 0 auto;}
-    #summary {font-family:sans-serif;font-weight:bold;text-align:center;outline:none;padding-top:15px;margin: 0 auto;}
-    #content {margin: 0 auto;padding-top:15px}
-    #input_sliders label { float:left;font-weight:bold;padding-bottom:10px;}
-    input[type=range] { float:left;clear:left;margin-right:10px;}
-    input[type=range]::-ms-track { background: transparent;border-color: transparent;color: transparent;-webkit-appearance: none}
-    input[type=range]::-ms-track { -ms-appearance: none; height: 3px;background-color: #d5d5d5; margin-right: 0;
-    	margin-top: 5px;margin-bottom: 5px;	border:0; }
-    input[type=range]::-ms-thumb { background-color: #FFF; border: 3px solid rgb(150,150,150);
-        border-radius: 5px; height: 10px;width: 1px; }
-    input[type=range]::-webkit-slider-runnable-track { height: 5px;background:#7c7c7c; margin-top: -4px;}
-    input[type=range]::-webkit-slider-thumb { margin-top:-6px;}
-
-    </style>
+    <!-- Custom CSS styling -->
+    <link rel="stylesheet" href="./src/css/style.css" />
 
     <title>Design Explorer Lite</title>
 </head>
@@ -113,8 +93,8 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="LoadFromCloud()" data-dismiss="modal">Load Data</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" onclick="LoadFromCloud()" data-dismiss="modal">Load Data</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
 
             </div>
@@ -180,7 +160,7 @@
                 <div id="visualSettingView" class="collapse">
                     <div class="card card-body">
                         <div class="panel-group" id="visSettingList">
-                                <button class="btn btn-primary" onclick="addBarChart()">new BarChart</button>
+                                <button class="btn btn-default" onclick="addBarChart()">new BarChart</button>
                                 <!--placeholder for visuals setting list-->
                         </div>
                         <!-- barChart setting template -->
@@ -219,9 +199,9 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateView()">Update</button>
-                <button type="button" class="btn btn-primary" onclick="saveSettings()">Save</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="updateView()">Update</button>
+                <button type="button" class="btn btn-default" onclick="saveSettings()">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
 
             </div>

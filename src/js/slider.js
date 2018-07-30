@@ -119,5 +119,5 @@ function stylizeSliders(){
     .style("width", width.toString()+'px')
     .style("height", '100px')
   d3.selectAll('input[type=range]')
-    .style('width', (width-70).toString()+'px')
+    .style('width', (width-80).toString()+'px')
 }

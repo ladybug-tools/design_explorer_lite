@@ -147,8 +147,8 @@ input[type=range]::-ms-thumb {
   cursor: pointer;
 }
 input[type=range]:focus::-ms-fill-lower {
-  background: #7c7c7c;
+  background: #A9A9A9;
 }
 input[type=range]:focus::-ms-fill-upper {
-  background: #367ebd;
+  background: #A9A9A9;
 }

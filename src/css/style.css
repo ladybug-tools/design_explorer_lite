@@ -126,13 +126,13 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
-  background: #A9A9A9;
+  background-color: #A9A9A9;
   border: 0.2px solid #A9A9A9;
   border-radius: 4px;
   box-shadow: 1px 1px 1px #A9A9A9, 0px 0px 1px #A9A9A9;
 }
 input[type=range]::-ms-fill-upper {
-  background: #A9A9A9;
+  background-color: #A9A9A9;
   border: 0.2px solid #A9A9A9;
   border-radius: 4px;
   box-shadow: 1px 1px 1px #A9A9A9, 0px 0px 1px #A9A9A9;
@@ -143,12 +143,12 @@ input[type=range]::-ms-thumb {
   height: 22px;
   width: 12px;
   border-radius: 4px;
-  background: #696969;
+  background-color: #696969;
   cursor: pointer;
 }
 input[type=range]:focus::-ms-fill-lower {
-  background: #A9A9A9;
+  background-color: #A9A9A9;
 }
 input[type=range]:focus::-ms-fill-upper {
-  background: #A9A9A9;
+  background-color: #A9A9A9;
 }

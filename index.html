@@ -32,6 +32,10 @@
     <style>
     .slider {float:left;padding:10px;height:fit-content}
     .slideroutput {float:right;}
+    .logo {padding-right:30px;}
+    .btn-default {border-radius:20px;margin-right:20px;margin-top:10px;float:right;}
+    .btn-default:hover {background-color:#D3D3D3;border-color:#D3D3D3;}
+    #header {margin-bottom:10px;}
     #study_results {margin:auto;}
     #inputSliders {font-family:sans-serif;outline:none;padding-top:15px;margin: 0 auto;}
     #summary {font-family:sans-serif;font-weight:bold;text-align:center;outline:none;padding-top:15px;margin: 0 auto;}
@@ -52,14 +56,18 @@
 </head>
 
 <body>
+  <!-- page header -->
+  <div id="header">
+    <img class="logo" src="src/img/design_explorer_lite_logo.png" alt="Temperature Legend" width="420px">
     <!-- Button to Open the gettingDataPopup -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loadingDataView">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#loadingDataView">
         Get Data
     </button>
     <!-- Button to Open the setting -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#settingView" onclick="drawSettingViewBody()">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#settingView" onclick="drawSettingViewBody()">
         Settings
     </button>
+  </div>
 
   <!-- sliders -->
   <div id="study_results">
@@ -125,22 +133,22 @@
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body"> 
+                <div class="modal-body">
                     <h5 >Link for share </h5>
                     <p >
                         <code id="myStudyID">Not available</code>
                         <button id="copy-link" class="btn btn-xs btn-default" onclick="CopyToClipboard('#myStudyID')" data-toggle="tooltip" data-placement="bottom" title="Click to copy the link!">
                             <span class="glyphicon glyphicon-share"></span>
                         </button>
-                    </p> 
+                    </p>
                     <h5 >Short link </h5>
                     <p >
                         <code id="showShortUrl">Not available</code>
                         <button id="copy-showShortUrl" class="btn btn-xs btn-default " onclick="CopyToClipboard('#showShortUrl')" data-toggle="tooltip" data-placement="bottom" title="Click to copy the link!">
                             <span class="glyphicon glyphicon-share"></span>
                         </button>
-                    </p> 
-                    
+                    </p>
+
                 </div>
 
                 <!-- Modal footer -->
@@ -227,11 +235,11 @@
             if(isIE){
                 alert("Please use modern browsers to ensure the maximized experience.\n\nGoogle Chrome, or Firefox is suggested to use.");
             }
-            
+
             if (window.location.href.toUpperCase().search("ID=") > 0) {
                 // d3.select("#welcome").style("display", "none");
                 LoadFromCloud("URL");
-            } 
+            }
         }
     </script>
 </body>

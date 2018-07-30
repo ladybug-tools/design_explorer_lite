@@ -13,6 +13,9 @@ var _folderInfo = {
     "type":""
 }
 
+// load the sample project automatically
+loadFromUrl('https://drive.google.com/drive/folders/14fhftDFou0htwqsQEg4dwLDm_G7h-PZH')
+
 function LoadFromCloud(dataMethod) {
     // clear all data within the google object
     _googleReturnObj.csvFiles = {}
@@ -274,9 +277,9 @@ function showStillLink() {
 
     }else if (_folderInfo.DE_PW.length>0){
         // if _folderInfo.DE_PW existed, just return.
-        studyEncodedUrl = document.location.origin + "/design_explorer_lite/?ID=" + _folderInfo.DE_PW; 
+        studyEncodedUrl = document.location.origin + "/design_explorer_lite/?ID=" + _folderInfo.DE_PW;
         d3.select("#showShortUrl").html("https://goo.gl/" +_folderInfo.DE_PW);
-        d3.select("#myStudyID").html(studyEncodedUrl); 
+        d3.select("#myStudyID").html(studyEncodedUrl);
         $("#showStillLink").modal();
         return;
 
@@ -289,17 +292,17 @@ function showStillLink() {
     }
     var studyLongUrl = siteOrigin +"/design_explorer_lite/?ID="+ studyCaseLink;
     d3.select("#welcome").style("display","none");
-    
-    
+
+
     makeUrlId(studyLongUrl, function name(UrlId) {
         _folderInfo.DE_PW = UrlId;
         console.log("loging DE_PW");
-        
+
         console.log(_folderInfo);
-        
+
 
         if(UrlId.length ==6){ // google url id
-            
+
             studyEncodedUrl = siteOrigin +"/design_explorer_lite/?ID="+_folderInfo.DE_PW;
             d3.select("#showShortUrl").html("https://goo.gl/"+ _folderInfo.DE_PW);
 
@@ -309,9 +312,9 @@ function showStillLink() {
 
         d3.select("#myStudyID").html(studyEncodedUrl);
         $("#showStillLink").modal()
-        
+
     })
-    
+
 
 }
 
@@ -319,7 +322,7 @@ function makeUrlId(rawUrl,callback) {
     var longUrl=rawUrl;
     console.log("making DE_PW");
     console.log(longUrl);
-    
+
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
@@ -327,7 +330,7 @@ function makeUrlId(rawUrl,callback) {
         data: "{ longUrl: '"+longUrl+"'}",
         error: function(e) {
         console.log('loging POST error');
-        
+
         callback(encodeUrl(longUrl));
 
         },
@@ -339,11 +342,11 @@ function makeUrlId(rawUrl,callback) {
             //response.id:  https://goo.gl/bMOO
             UrlID = response.id.split("/");
             UrlID = UrlID[UrlID.length-1];  //UrlID: bMOO
-            
+
         }
         callback(UrlID);
         }
-    });  
+    });
 }
 
 function decodeUrlID(rawUrl, callback) {
@@ -370,9 +373,9 @@ function decodeUrlID(rawUrl, callback) {
         //linkID = linkID[linkID.length - 1];
         linkID = DEID;
         //console.log(linkID)
-        
+
         if (linkID.length === 6) {
-            d3.json("https://www.googleapis.com/urlshortener/v1/url?key="+ Gkey+"&shortUrl=http://goo.gl/"+linkID, 
+            d3.json("https://www.googleapis.com/urlshortener/v1/url?key="+ Gkey+"&shortUrl=http://goo.gl/"+linkID,
                 function(d){
                     var GID = (getUrlVars(d.longUrl).ID);
                     serverFolderLink = decodeUrl(GID);
@@ -383,7 +386,7 @@ function decodeUrlID(rawUrl, callback) {
             serverFolderLink = decodeUrl(linkID);
             callback(serverFolderLink);
         }
-        
+
 
     }else {
 
@@ -407,7 +410,7 @@ function decodeUrl(encodedString) {
         console.log(err.message+" But fixed:>");
         url = atob(encodedString.replace('_','/').replace('-','+')+"=");
     }
-    
+
     return url;
 }
 

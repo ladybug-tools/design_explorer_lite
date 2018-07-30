@@ -126,24 +126,24 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
-  background: #2a6495;
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #A9A9A9;
+  border: 0.2px solid #A9A9A9;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px #A9A9A9, 0px 0px 1px #A9A9A9;
 }
 input[type=range]::-ms-fill-upper {
-  background: #7c7c7c;
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #A9A9A9;
+  border: 0.2px solid #A9A9A9;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px #A9A9A9, 0px 0px 1px #A9A9A9;
 }
 input[type=range]::-ms-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ffffff;
+  box-shadow: 1px 1px 1px #696969, 0px 0px 1px #696969;
+  border: 1px solid #696969;
+  height: 22px;
+  width: 12px;
+  border-radius: 4px;
+  background: #696969;
   cursor: pointer;
 }
 input[type=range]:focus::-ms-fill-lower {

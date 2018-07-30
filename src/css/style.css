@@ -122,7 +122,8 @@ input[type=range]::-ms-track {
   animate: 0.2s;
   background: transparent;
   border-color: transparent;
-  border-width: 0px 0;
+  border-width: 12px 0;
+  margin-bottom: 4px;
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {

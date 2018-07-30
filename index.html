@@ -114,42 +114,43 @@
     </div>
 
     <!--show static link-->
-    <!-- Modal -->
-    <div class="modal fade" id="showStillLink" role="dialog">
+    <div class="modal fade" id="showStillLink">
         <div class="modal-dialog">
-        
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Static link</h4>
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Static link</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body"> 
+                    <h5 >Link for share </h5>
+                    <p >
+                        <code id="myStudyID">Not available</code>
+                        <button id="copy-link" class="btn btn-xs btn-default" onclick="CopyToClipboard('#myStudyID')" data-toggle="tooltip" data-placement="bottom" title="Click to copy the link!">
+                            <span class="glyphicon glyphicon-share"></span>
+                        </button>
+                    </p> 
+                    <h5 >Short link </h5>
+                    <p >
+                        <code id="showShortUrl">Not available</code>
+                        <button id="copy-showShortUrl" class="btn btn-xs btn-default " onclick="CopyToClipboard('#showShortUrl')" data-toggle="tooltip" data-placement="bottom" title="Click to copy the link!">
+                            <span class="glyphicon glyphicon-share"></span>
+                        </button>
+                    </p> 
+                    
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
             </div>
-            <div class="modal-body"> 
-                <h5 >Link for share </h5>
-                <p >
-                    <code id="myStudyID">Not available</code>
-                    <button id="copy-link" class="btn btn-xs btn-default" onclick="CopyToClipboard('#myStudyID')" data-toggle="tooltip" data-placement="bottom" title="Click to copy the link!">
-                        <span class="glyphicon glyphicon-share"></span>
-                    </button>
-                </p> 
-                <h5 >Short link </h5>
-                <p >
-                    <code id="showShortUrl">Not available</code>
-                    <button id="copy-showShortUrl" class="btn btn-xs btn-default " onclick="CopyToClipboard('#showShortUrl')" data-toggle="tooltip" data-placement="bottom" title="Click to copy the link!">
-                        <span class="glyphicon glyphicon-share"></span>
-                    </button>
-                </p> 
-                
-            </div>
-            
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-        
         </div>
     </div>
-
 
 
     <!-- The Setting View -->

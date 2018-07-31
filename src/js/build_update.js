@@ -122,10 +122,24 @@ buildAll = function() {
 
     // assemble all of the metrics in the scene
     metricNames = d3.keys(metrics)
+    var numSliders = metricNames.length
+    metricWidth = 2
+    if (numSliders <= 2){
+      metricWidth = 6
+    } else if (numSliders == 3 || numSliders == 6 || numSliders == 9) {
+      metricWidth = 4
+    } else if (numSliders == 4 || numSliders == 8) {
+      metricWidth = 3
+    } else if (numSliders == 5 || numSliders == 10) {
+      metricWidth = 2.4
+    } else if (numSliders == 7) {
+      metricWidth = 1.71428
+    }
+
     for (i = 0; i < metricNames.length; i++) {
       metricName =  metricNames[i]
       lonName = metricName.split('out:')[1]
-      metrics[metricName]['object'] = buildMetric(getData(metrics[metricName]['indices'])[0], {'longName': lonName})
+      metrics[metricName]['object'] = buildMetric(getData(metrics[metricName]['indices'])[0], {'width': metricWidth, 'longName': lonName})
     }
   }
 
@@ -152,7 +166,6 @@ updateAll = function() {
   }
 }
 
-
 getData = function(indices){
   finalList = []
   for  (k = 0; k < indices.length; k++) {
@@ -160,6 +173,7 @@ getData = function(indices){
   }
   return finalList
 }
+
 
 // DELETE ALL OF THE OUTPUT CONTENT
 deleteAll = function() {

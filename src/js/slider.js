@@ -6,8 +6,8 @@ function makeInputSlider(name, unitSuffix, longName, max, isEven, columnName){
    var styleString = isEven ? evenSliderBackground : oddSliderBackground;
    $('#sliderFields').append(
     '<div class="slider" id="'+name+'slider" style="'+styleString+'">'+
-    '<label>'+longName+'</label>'+
-    '<input type="range" name="'+name+'" id="'+name+'" value="0" min="0" max="'+max+'" step = "1">'+
+    '<div class="slabel"> <label>'+longName+'</label></div>'+
+    '<div class="slabel"> <input type="range" name="'+name+'" id="'+name+'" value="0" min="0" max="'+max+'" step = "1"></div>'+
     '<div class="slideroutput"><p id="'+name+'output">'+_columnDictionaries[columnName][0]+unitSuffix+'</p></div>'+
     '</div>');
 }

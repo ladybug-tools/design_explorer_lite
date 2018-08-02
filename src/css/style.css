@@ -58,6 +58,7 @@
 /* Styling for individual objects */
 #header {
   margin-bottom:10px;
+  clear:both;
 }
 
 #study_results {

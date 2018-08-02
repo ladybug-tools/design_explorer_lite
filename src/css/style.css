@@ -35,6 +35,26 @@
   clear:both;
 }
 
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #A9A9A9;
+    color: black;
+}
+
+.footer a {
+    margin-left:20px;
+    margin-right:20px;
+    color: black;
+}
+
+.footer a:hover{
+    color: white;
+    text-decoration:none;
+}
+
 /* Styling for individual objects */
 #header {
   margin-bottom:10px;
@@ -69,6 +89,9 @@
   font-weight:bold;
 }
 
+#backstory {
+  float:right;
+}
 
 
 /* Styling for the sliders*/

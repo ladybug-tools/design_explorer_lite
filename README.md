@@ -4,11 +4,13 @@ http://www.ladybug.tools/design_explorer_lite/
 
 # Interface
 The interface has been developed to communicate the essence of parametric studies by allowing people to scroll through design spaces using sliders.
-![Image of Design Explorer Lite Interface](https://github.com/ladybug-tools/design_explorer_lite/raw/master/resources/screenshot.png)
+![Image of Design Explorer Lite Interface](https://github.com/ladybug-tools/design_explorer_lite/raw/master/resources/images/usage/screenshot.png)
 
 # Getting Started
 Any study that has been formatted to display on the [Full Design Explorer](https://tt-acm.github.io/DesignExplorer/) can be displayed using Design Explorer Lite.
 Simply hit the "Get Data" button in the upper right-hand corner of the Design Explorer Lite interface and paste a URL to the location where your CSV and images live.
+
+![Get Data Button](https://github.com/ladybug-tools/design_explorer_lite/raw/master/resources/images/usage/get_data.png)
 
 You can try out a few different sample studies by pasting links to the following Design Explorer Studies:
 - Parametric Facade: https://drive.google.com/drive/folders/0Bz2PwDvkjovJNjhxRkg4WXlNMTA

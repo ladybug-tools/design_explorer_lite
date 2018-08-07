@@ -13,10 +13,6 @@ var _folderInfo = {
     "type":""
 }
 
-// load the sample project automatically
-if (Object.keys(_googleReturnObj.csvFiles).length == 0){
-  loadFromUrl('https://drive.google.com/drive/folders/14fhftDFou0htwqsQEg4dwLDm_G7h-PZH')
-}
 
 function LoadFromCloud(dataMethod) {
     // clear all data within the google object

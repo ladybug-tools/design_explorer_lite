@@ -13,14 +13,7 @@ function makeInputSlider(name, unitSuffix, longName, max, isEven, columnName){
 }
 
 function makeInputSliderEventHandler(name, columnName, unitSuffix){
-    /*
-    $("#flrA").on("input", function(event) {
-        FlrA = $(this).val();
-        $("#flroutput").text(fAreaDict[FlrA]);
-        updateImg();
-        updateEnergy();
-    });
-    */
+
    var idName = "#"+name;
    //console.log(idName);
    var outPutName = idName + "output"

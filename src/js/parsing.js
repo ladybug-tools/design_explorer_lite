@@ -14,6 +14,7 @@
 
 var columnRegex = new RegExp(/((?:in)|(?:out)): ?(?:(\w*) ?(?:\[(.*)\])?)/i);
 var columnToNameMap = {};
+var _sliderIDnames = []
 
 var columnSets = {};
 var _parameters =[];
@@ -80,6 +81,11 @@ function parseCsv(data){
             //console.log('match object:')
             //console.log(match)
             name = match[2];
+            // avoid accidental duplicate names
+            if (_sliderIDnames.indexOf(name) >= 0) {
+              name = name + colIndex.toString()
+            }
+            _sliderIDnames.push(name)
             _parameters.push(name);
             columnToNameMap[columnName] = name;
             if (_settings != null){

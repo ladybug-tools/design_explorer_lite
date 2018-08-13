@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- jQuery -->
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- D3 -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <!-- BootstrapJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+    <!-- Custom javascript for the tool -->
+    <script src="./src/js/parsing.js"></script>
+    <script src="./src/js/settings.js"></script>
+    <script src="./src/js/getGFolderObj.js"></script>
+    <script src="./src/js/build_update.js"></script>
+    <script src="./src/js/slider.js"></script>
+    <script src="./src/js/bar_chart.js"></script>
+    <script src="./src/js/image.js"></script>
+    <script src="./src/js/metric.js"></script>
+
+    <!-- Custom CSS styling -->
+    <link rel="stylesheet" href="./src/css/style.css" />
+
+    <title>Design Explorer Lite</title>
+</head>
+
+<body>
+
+  <!-- sliders -->
+  <div id="study_results">
+    <div id="input_sliders">
+      <form autocomplete="off">
+        <fieldset id="sliderFields">
+        </fieldset>
+      </form>
+    </div>
+
+    <!-- visual content, images, graphs -->
+    <div id="content">
+    </div>
+
+    <!-- visual content, images, graphs -->
+    <div id="metrics">
+    </div>
+    <script>
+      //call gobject, and pass it to parser
+    </script>
+  </div>
+
+    <!-- The loadingDataView -->
+    <div class="modal fade" id="loadingDataView">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">From the cloud</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" id="settingViewBody">
+                    <p class="text-center">
+                        <input type="text" id="folderLink" class="col-lg-12" name="imgfolder" placeholder="GoogleDrive link"
+                        />
+                        <input type="text" id="folderLinkID" class="btn d-none" name="imgfolder" placeholder="FolderID" />
+                    </p>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="LoadFromCloud()" data-dismiss="modal">Load Data</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--show static link-->
+    <div class="modal fade" id="showStillLink">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Static link</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <h5 >Link for share </h5>
+                    <p >
+                        <code id="myStudyID">Not available</code>
+                        <button id="copy-link" class="btn btn-xs btn-default" onclick="CopyToClipboard('#myStudyID')" data-toggle="tooltip" data-placement="bottom" title="Click to copy the link!">
+                            <span class="glyphicon glyphicon-share"></span>
+                        </button>
+                    </p>
+                    <h5 >Short link </h5>
+                    <p >
+                        <code id="showShortUrl">Not available</code>
+                        <button id="copy-showShortUrl" class="btn btn-xs btn-default " onclick="CopyToClipboard('#showShortUrl')" data-toggle="tooltip" data-placement="bottom" title="Click to copy the link!">
+                            <span class="glyphicon glyphicon-share"></span>
+                        </button>
+                    </p>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- The Setting View -->
+    <div class="modal fade" id="settingView">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Settings</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" id="settingViewBody">
+
+                <button id="chartSettingBtn" data-toggle="collapse" data-target="#visualSettingView" >ChartSetting</button>
+                <button id="paramSettingBtn" data-toggle="collapse" data-target="#paramSettingView" >paramSettingView</button>
+                <div id="visualSettingView" class="collapse">
+                    <div class="card card-body">
+                        <div class="panel-group" id="visSettingList">
+                                <button class="btn btn-default" onclick="addBarChart()">new BarChart</button>
+                                <!--placeholder for visuals setting list-->
+                        </div>
+                        <!-- barChart setting template -->
+                        <div class="d-none" id="barChartTemp">
+                            <ul class="list-group">
+                                <li class="list-group-item form-inline">name
+                                    <input id="name" class="form-control input-sm" type="text" placeholder="newBarChart">
+                                </li>
+                                <li class="list-group-item form-inline">stacked
+                                    <input id="stacked"  class="form-control input-sm" type="text" placeholder="true">
+                                </li>
+                                <li class="list-group-item form-inline">yAxisText
+                                    <input id="yAxisText" class="form-control input-sm" type="text" placeholder="YAxisTitle">
+                                </li>
+                                <li class="list-group-item form-inline">maxVal
+                                <input id="maxVal" class="form-control input-sm" type="text", value="">
+                                </li>
+                                <li class="list-group-item form-inline">dataColors
+                                    <input id="dataColors" class="form-control input-sm" type="text" value="">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="paramSettingView" class="collapse">
+                    <div class="card card-body">
+                        <div class="panel-group" id="dimSettingList">
+                                <!--placeholder for parameters setting list-->
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="updateView()">Update</button>
+                <button type="button" class="btn btn-default" onclick="saveSettings()">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            var isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+            if(isIE){
+                alert("Please use modern browsers to ensure the maximized experience.\n\nGoogle Chrome, or Firefox is suggested to use.");
+            }
+
+            if (window.location.href.toUpperCase().search("ID=") > 0) {
+                // d3.select("#welcome").style("display", "none");
+                LoadFromCloud("URL");
+            } else{
+              // load the sample project automatically
+              loadFromUrl('https://drive.google.com/drive/folders/14fhftDFou0htwqsQEg4dwLDm_G7h-PZH')
+            }
+        }
+    </script>
+</body>
+</html>

@@ -31,7 +31,7 @@ buildChart = function(dataList, propertiesDict) {
     svgwidth = propertiesDict["width"]
   }
   if ("height" in propertiesDict){
-    height = propertiesDict["height"]
+    svgheight = propertiesDict["height"]
   }
   if ("margin" in propertiesDict){
     margin = propertiesDict["margin"]

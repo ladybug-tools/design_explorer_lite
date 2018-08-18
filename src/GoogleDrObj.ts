@@ -119,7 +119,7 @@ export class GoogleDrObj{
 
 }
 
-class FolderInfo { 
+export class FolderInfo { 
     csvFiles:object = {};
     imgFiles:object = {};
     jsonFiles:object = {};

@@ -1,3 +1,4 @@
+import { Slider } from "./Slider";
 
 export class DeLite{
 
@@ -8,7 +9,7 @@ export class DeLite{
      */
     constructor(dataObj:DeLiteData) {
         this._deData = dataObj;
-        console.log(dataObj);
+        //console.log(dataObj);
         
     }
 
@@ -29,7 +30,11 @@ export class DeLite{
 
 
     public makeInputSliders():void {
+        //debugger;
+        let inputParams = this._deData.inputParamSets;
+        let sliders = new Slider(inputParams);
         
+
     }
 
     public makeImageDivs():void{
@@ -56,7 +61,15 @@ export class DeLite{
  * This data object contains all formated info for Design Explorer Lite
  */
 export class DeLiteData{
-    inputParamSets:Set<string>[] = []; //For makeing sliders;
+    inputParamSets:DataUniqueSet = {}; //For makeing sliders;
     data:object = {}; 
     setting:object ={}; //TODO: define setting obj;
+}
+
+export interface DataUniqueSet extends Data<Set<string>>{
+
+}
+
+export interface Data<T> {
+    [key: string]: T
 }

@@ -11,7 +11,8 @@ export class Parsing{
     constructor(GFolderInfo:FolderInfo, drawPageAction:(deData:DeLiteData)=> void) {
         let hasDataCsv = this.checkGFolder(GFolderInfo);
         if (hasDataCsv) {
-            Parsing.getCsvObj(GFolderInfo, drawPageAction);
+            const info =  Parsing.getFolderInfoAsync(GFolderInfo);
+            info.then(drawPageAction);
         } else {
             alert('No data.csv!');
         }
@@ -30,46 +31,74 @@ export class Parsing{
 
     }
 
-    private static getCsvObj(GFolderInfo: FolderInfo, drawPageAction:(deData:DeLiteData)=> void):void{
-
+        
+    public static async getFolderInfoAsync (GFolderInfo: FolderInfo) : Promise<DeLiteData> {
         //read csv file from google drive
         let gFolder = GFolderInfo;
 
-        let dataCsvFile:string = gFolder.csvFiles['data.csv'];
-        let settingFile:string = gFolder.settingFiles['settings_lite.json'];
-        d3.csv(dataCsvFile).then(
-            function(d:any){
-            
-                let deData = new DeLiteData();
-                //read settings file
-                //TODO: check if settingFile is null.
-                if (settingFile === null) {
-                    deData = Parsing.parseDataItems(d,deData);
-                }else{
-                    d3.json(settingFile).then(
-                        function(settingsJson){
-                            //add settings file to global _settings
-                            deData.setting = settingsJson;
-                            //_settings = settingsJson; 
-                            deData =  Parsing.parseDataItems(d,deData);
-                            //console.log('pushed parameters and settings')
-                            //console.log('finished parsing csv')
-                            //buildAll();
-                          }
-                    )
-                }
+        const dataCsvFile:string = gFolder.csvFiles['data.csv'];
+        const settingFile:string = gFolder.settingFiles['settings_lite.json'];
+        console.log('getting data.csv!');
+        const csvData = await d3.csv(dataCsvFile);
 
-                drawPageAction(deData);
+        let deData = new DeLiteData();
+        //read settings file
+        deData = Parsing.parseDataItems(csvData,deData);
+
+        if (settingFile != null) {
+            console.log('getting setting json');
+            
+            const settingData = await d3.json(settingFile);
+            deData.setting = settingData;
+        }
+
+        return deData;
+
+    }
+
+    // private static getCsvObj(GFolderInfo: FolderInfo, drawPageAction:(deData:DeLiteData)=> void):void{
+
+    //     //read csv file from google drive
+    //     let gFolder = GFolderInfo;
+
+    //     let dataCsvFile:string = gFolder.csvFiles['data.csv'];
+    //     let settingFile:string = gFolder.settingFiles['settings_lite.json'];
+    //     d3.csv(dataCsvFile).then(
+    //         function(d:any){
+    //             let deData = new DeLiteData();
+    //             //read settings file
+    //             //TODO: check if settingFile is null.
+    //             deData = Parsing.parseDataItems(d,deData);
+
+    //             if (settingFile != null) {
+    //                 d3.json(settingFile).then(
+    //                     function(settingsJson){
+    //                         //add settings file to global _settings
+    //                         deData.setting = settingsJson;
+    //                         //_settings = settingsJson; 
+    //                         //deData =  Parsing.parseDataItems(d,deData);
+    //                         //console.log('pushed parameters and settings')
+    //                         //console.log('finished parsing csv')
+    //                         //buildAll();
+    //                         drawPageAction(deData);
+    //                       }
+    //                 ).catch((d)=>{console.log(d);
+    //                 })
+    //             }else{
+    //                 drawPageAction(deData);
+    //             }
+
+               
                 
 
-              }
-        )
+    //           }
+    //     )
         
-    }
+    // }
 
     private static parseDataItems(data:object[], deLiteData:DeLiteData):DeLiteData{
 
-        let columnNames = d3.keys(data[0]);
+        let columnNames = Object.keys(data[0]);
         let columnRegex = new RegExp(/((?:in)|(?:out)): ?(?:(\w*) ?(?:\[(.*)\])?)/i);
         let parameters:string[] = [];
         
@@ -94,7 +123,7 @@ export class Parsing{
             }
         });
         
-        let inputParamNames = d3.keys(columnSets);
+        let inputParamNames = Object.keys(columnSets);
 
         data.forEach(row => {
             

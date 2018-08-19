@@ -1,6 +1,29 @@
 import * as d3 from "d3";
 
 
+function loading(msg:string, callback:()=>void) {
+    let dom = document.getElementById('greeting');
+    if (dom !=null) {
+        dom.innerText = msg;
+        if(callback != null){
+            callback();
+        }
+        
+    }
+    
+    //console.log(dom);
+    
+    // var intervalId = window.setInterval(function() {
+    //   if (document.getElementsByTagName('#greeting') !== undefined) {
+
+    //     window.clearInterval(intervalId);
+    //     callback();
+    //   }
+    // }, 1000);
+}
+const WINDOW:any = window;
+WINDOW.pageLoading = loading;
+
 export class GoogleDrObj{
     private static _Gkey = "AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY";
     private _GID:string = "";
@@ -13,6 +36,7 @@ export class GoogleDrObj{
     constructor(GoogleFolderURL:string) {
         this._GID =  GoogleDrObj.getGFolderID(GoogleFolderURL); //0Bz2PwDvkjovJNjhxRkg4WXlNMTA;
         const urlApi ="https://www.googleapis.com/drive/v3/files?q=%27" + this._GID + "%27+in+parents&key=" + GoogleDrObj._Gkey;
+        WINDOW.pageLoading('start reading google drive data!',null);
         this.GFolderInfoPromise =  GoogleDrObj.getFolderInfo(urlApi);
     }
 
@@ -49,6 +73,7 @@ export class GoogleDrObj{
         let Gkey =GoogleDrObj._Gkey;
 
         const files:object[] = data.files;
+        WINDOW.pageLoading('Currently loading amount: '+files.length,null);
         console.log('Currently loading amount: '+files.length);
         
 

@@ -4,68 +4,55 @@ import * as d3 from "d3";
 export class GoogleDrObj{
     private static _Gkey = "AIzaSyCSrF08UMawxKIb0m4JsA1mYE5NMmP36bY";
     private _GID:string = "";
+    public GFolderInfoPromise:Promise<FolderInfo>;
     //GFolderInfo:FolderInfo = new FolderInfo();
     /**
      *This class takes care of fetching data from user's Google Drive link.
      Use getFolderInfo(callback()) after constructing this obj.
      */
     constructor(GoogleFolderURL:string) {
-        this._GID =  GoogleDrObj.getGFolderID(GoogleFolderURL); ;
+        this._GID =  GoogleDrObj.getGFolderID(GoogleFolderURL); //0Bz2PwDvkjovJNjhxRkg4WXlNMTA;
+        const urlApi ="https://www.googleapis.com/drive/v3/files?q=%27" + this._GID + "%27+in+parents&key=" + GoogleDrObj._Gkey;
+        this.GFolderInfoPromise =  GoogleDrObj.getFolderInfo(urlApi);
     }
 
     
-    public getFolderInfo ( action:(folderInfo:FolderInfo)=> void) : void {
-
-        let GID = GoogleDrObj.getGFolderID(this._GID); //0Bz2PwDvkjovJNjhxRkg4WXlNMTA;
-        let urlApi ="https://www.googleapis.com/drive/v3/files?q=%27" + GID + "%27+in+parents&key=" + GoogleDrObj._Gkey;
-
-        let tempObj = new FolderInfo();
-
-        let jsonFunc = (url:string, da:FolderInfo) : Promise<FolderInfo>=>d3.json(url)
-        .then(
-            (d)=>{
-                let obj = GoogleDrObj.makeCleanFolderObj(d);
-                $.extend(da.csvFiles,obj.csvFiles);
-                $.extend(da.imgFiles,obj.imgFiles);
-                $.extend(da.jsonFiles,obj.jsonFiles);
-                $.extend(da.settingFiles,obj.settingFiles);
-                return d;
-            }
-        ).then(
-            (d:any)=> {
-                if (d.nextPageToken !== undefined) {
-
-                    if (urlApi.search("&pageToken=") > 0) {
-                        urlApi = urlApi.split("&pageToken=", 1)[0];
-                    }
+    public static async getFolderInfo (url:string) : Promise<FolderInfo> {
+        let urlApi = url;
         
-                    urlApi +=  "&pageToken=" + d.nextPageToken;
-                    return jsonFunc(urlApi, da);
-                    
-                }else{
-                    return da;
-                }
-                
+        const rawData = await d3.json(urlApi);
+        const formatedData =  GoogleDrObj.makeCleanFolderObj(rawData);
+
+        let nextPageToken = rawData['nextPageToken'];
+        if (nextPageToken !== undefined) {
+
+            if (urlApi.search("&pageToken=") > 0) {
+                urlApi = urlApi.split("&pageToken=", 1)[0];
             }
+
+            urlApi +=  "&pageToken=" + nextPageToken;
+            const nextData = await GoogleDrObj.getFolderInfo(urlApi);
+
+            $.extend(formatedData.csvFiles,nextData.csvFiles);
+            $.extend(formatedData.imgFiles,nextData.imgFiles);
+            $.extend(formatedData.jsonFiles,nextData.jsonFiles);
+            $.extend(formatedData.settingFiles,nextData.settingFiles);
             
-        );
+        }
 
-        jsonFunc(urlApi,tempObj)
-        .then(
-            (d)=>{
-                action(d);
-                //console.log(d);
-                
-            }
-        );
-        
+        return formatedData;
+
     }
 
     private static makeCleanFolderObj(data:any):FolderInfo{
         let folderObj = new FolderInfo();
         let Gkey =GoogleDrObj._Gkey;
 
-        data.files.forEach(function (item:any) {
+        const files:object[] = data.files;
+        console.log('Currently loading amount: '+files.length);
+        
+
+        files.forEach(function (item:any) {
             let GLink:string = "";
             if(item.mimeType === "text/csv"){
                 GLink = "https://www.googleapis.com/drive/v3/files/" + item.id + "?alt=media&key=" + Gkey;

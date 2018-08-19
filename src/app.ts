@@ -8,19 +8,22 @@ let url = "https://drive.google.com/drive/folders/14fhftDFou0htwqsQEg4dwLDm_G7h-
 
 let g = new GoogleDrObj(url);
 
-g.getFolderInfo((d)=>{
-    //console.log("getting data");
-    //console.log(d);
-
-    new Parsing(d, 
-        (deData:DeLiteData) => {
-            //console.log(deData);
-            debugger;
-            let deLite = new DeLite(deData);
-            //let divSeletion = d3.select('');
-            deLite.buildPage();
-        }
-    )  
+g.GFolderInfoPromise.then(
+    (d)=>{
+        //console.log("getting data");
+        //console.log(d);
     
-})
+        new Parsing(d, 
+            (deData:DeLiteData) => {
+                //console.log(deData);
+                //debugger;
+                let deLite = new DeLite(deData);
+                //let divSeletion = d3.select('');
+                deLite.buildPage();
+            }
+        )  
+        
+    }
+)
+
 

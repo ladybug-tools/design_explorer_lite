@@ -1,7 +1,11 @@
 
 precisionRound = function(number, precision) {
-  		var factor = Math.pow(10, precision);
-  		return Math.round(number * factor) / factor;
+      if (isNaN(parseFloat(number))) {
+        return number
+      } else{
+        var factor = Math.pow(10, precision);
+    		return Math.round(number * factor) / factor;
+      }
 		}
 
 buildMetric = function(metricValue, propertiesDict) {

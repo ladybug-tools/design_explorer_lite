@@ -169,7 +169,12 @@ updateAll = function() {
 getData = function(indices){
   finalList = []
   for  (k = 0; k < indices.length; k++) {
-    finalList.push(parseFloat(_currentRow[indices[k]]))
+    if (isNaN(parseFloat(_currentRow[indices[k]]))){
+      console.log(_currentRow[indices[k]])
+      finalList.push(_currentRow[indices[k]])
+    } else {
+      finalList.push(parseFloat(_currentRow[indices[k]]))
+    }
   }
   return finalList
 }
